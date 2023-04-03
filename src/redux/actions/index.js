@@ -1,5 +1,7 @@
-export const saveProfile = (password, email) => ({
-  type: 'SAVE_PROFILE',
+export const ADD_USER = 'ADD_USER';
+
+export const saveUserGlobal = (password, email) => ({
+  type: ADD_USER,
   password,
   email,
 });
