@@ -1,5 +1,5 @@
-const saveUserLocal = (email) => {
-  localStorage.setItem('user', email);
+const saveUserLocal = (userEmail) => {
+  localStorage.setItem('user', JSON.stringify({ email: userEmail }));
 };
 
 export default saveUserLocal;
