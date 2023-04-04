@@ -29,7 +29,7 @@ describe('Testa o componente Footer', () => {
     expect(header).toBeInTheDocument();
   });
 
-  it('Testa se o botão search revela e esconde o input ao ser clicado', () => {
+  it('Testa se o botão search revela e esconde o input-search ao ser clicado', () => {
     const { history } = renderWithRouterAndRedux(<Recipes />);
     history.push('/meals');
 
