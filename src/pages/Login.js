@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import saveUserLocal from '../helpers/handleLocalStorage';
 import { saveUserGlobal } from '../redux/actions';
+import Header from '../components/Header';
 
 class Login extends React.Component {
   state = {
@@ -46,6 +47,7 @@ class Login extends React.Component {
     const { history, dispatch } = this.props;
     return (
       <div>
+        <Header />
         <div>
           Trybewallet
         </div>
