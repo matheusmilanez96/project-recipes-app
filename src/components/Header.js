@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 export default class Header extends Component {
   state = {
@@ -19,7 +20,8 @@ export default class Header extends Component {
     const { pageName, hasSearchIcon } = this.props;
     const { isSearchActive } = this.state;
     return (
-      <div data-testid="header">
+      <div data-testid="header" className="header">
+        {/* <h1 data-testid="page-title">{pathname === '/meals' ? 'Meals' : 'Drinks'}</h1> */}
         {(isSearchActive === true)
         && (
           <input
@@ -50,6 +52,7 @@ export default class Header extends Component {
         </Link>
 
         <p name={ pageName } data-testid="page-title">{ pageName }</p>
+        <SearchBar />
       </div>
     );
   }

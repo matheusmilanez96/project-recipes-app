@@ -11,7 +11,11 @@ class MealsCards extends Component {
         {meals && meals.reduce((acc, curr, index) => {
           if (index < twelve) {
             const card = (
-              <div data-testid={ `${index}-recipe-card` } key={ curr.strMeal }>
+              <div
+                data-testid={ `${index}-recipe-card` }
+                key={ curr.strMeal }
+                className="meal-card"
+              >
                 <img
                   src={ curr.strMealThumb }
                   alt={ curr.strMeal }

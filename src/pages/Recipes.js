@@ -31,16 +31,16 @@ export default class Recipes extends Component {
     }
     this.setState({
       recipes,
+      pageName: recipeType === '/meals' ? 'Meals' : 'Drinks',
     });
   };
 
   render() {
     const { recipes, recipeType, pageName, hasSearchIcon } = this.state;
     return (
-      <div>
-        Recipes
+      <div className="recipes-first-div">
         <Header pageName={ pageName } hasSearchIcon={ hasSearchIcon } />
-        <main>
+        <main className="main-recipes">
           {recipeType === '/meals' ? <MealsCards recipes={ recipes } />
             : <DrinksCards recipes={ recipes } /> }
         </main>
