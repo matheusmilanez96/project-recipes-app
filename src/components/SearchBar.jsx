@@ -50,7 +50,7 @@ class SearchBar extends Component {
         </section>
         <button
           type="button"
-          // onClick={ console.log(searchType) }
+          onClick={ console.log(searchType) }
           data-testid="exec-search-btn"
         >
           Buscar
