@@ -1,9 +1,7 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
 import FavoriteRecipes from '../pages/FavoriteRecipes';
-import Recipes from '../pages/Recipes';
 import Profile from '../pages/Profile';
 import App from '../App';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
