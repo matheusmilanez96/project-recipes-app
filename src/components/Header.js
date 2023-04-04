@@ -21,15 +21,6 @@ export default class Header extends Component {
     const { isSearchActive } = this.state;
     return (
       <div data-testid="header" className="header">
-        {/* <h1 data-testid="page-title">{pathname === '/meals' ? 'Meals' : 'Drinks'}</h1> */}
-        {(isSearchActive === true)
-        && (
-          <input
-            placeholder="Search Recipe"
-            type="text"
-            data-testid="search-input"
-          />
-        )}
 
         {(hasSearchIcon === true)
         && (
@@ -49,8 +40,11 @@ export default class Header extends Component {
             alt="profile-icon"
           />
         </Link>
+        {(isSearchActive === true)
+        && (
+          <SearchBar />
+        )}
         <p name={ pageName } data-testid="page-title">{ pageName }</p>
-        <SearchBar />
       </div>
     );
   }
