@@ -42,7 +42,6 @@ export default class Header extends Component {
               alt="search-icon"
             />
           </button>)}
-
         <Link to="/profile">
           <img
             data-testid="profile-top-btn"
@@ -50,7 +49,6 @@ export default class Header extends Component {
             alt="profile-icon"
           />
         </Link>
-
         <p name={ pageName } data-testid="page-title">{ pageName }</p>
         <SearchBar />
       </div>
