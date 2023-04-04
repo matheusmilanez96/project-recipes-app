@@ -43,7 +43,7 @@ class MealsFilterButtons extends Component {
     const five = 5;
 
     return (
-      <div>
+      <div className="meal-filter-btn-div">
         {meals && meals.reduce((acc, curr, index) => {
           if (index < five) {
             const button = (
@@ -51,6 +51,7 @@ class MealsFilterButtons extends Component {
                 <button
                   id={ curr.strCategory }
                   onClick={ this.handleFilter }
+                  className="filter-button"
                   data-testid={ `${curr.strCategory}-category-filter` }
                 >
                   {curr.strCategory}

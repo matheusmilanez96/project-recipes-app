@@ -10,10 +10,10 @@
   width: 100%;
 }
 
-/* .footer {
+.footer {
   bottom: 0;
   position: fixed;
-} */
+}
 
 .rocksGlass {
   animation: shake 1s infinite ease;

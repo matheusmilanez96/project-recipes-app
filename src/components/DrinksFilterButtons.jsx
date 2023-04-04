@@ -43,7 +43,7 @@ class DrinksFilterButtons extends Component {
     const five = 5;
 
     return (
-      <div>
+      <div className="drink-filter-btn-div">
         {drinks && drinks.reduce((acc, curr, index) => {
           if (index < five) {
             const button = (
