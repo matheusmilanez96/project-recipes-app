@@ -48,10 +48,6 @@ class Login extends React.Component {
     return (
       <div>
         <Header />
-        <div>
-          Trybewallet
-        </div>
-
         <form
           onSubmit={ (e) => {
             e.preventDefault();
@@ -61,11 +57,9 @@ class Login extends React.Component {
             console.log('Ao clicar, envie a informação do formulário');
           } }
         >
-
           <div>
             Sign in
           </div>
-
           <fieldset>
             <input
               type="text"
@@ -76,7 +70,6 @@ class Login extends React.Component {
               data-testid="email-input"
             />
           </fieldset>
-
           <fieldset>
             <input
               type="password"
@@ -87,7 +80,6 @@ class Login extends React.Component {
               data-testid="password-input"
             />
           </fieldset>
-
           <button
             type="submit"
             disabled={ isButtonDisabled }
@@ -96,7 +88,6 @@ class Login extends React.Component {
             {' '}
             Entrar
           </button>
-
         </form>
       </div>
     );
