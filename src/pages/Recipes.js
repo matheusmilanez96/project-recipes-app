@@ -5,6 +5,8 @@ import Header from '../components/Header';
 import MealsCards from '../components/MealsCards';
 import DrinksCards from '../components/DrinksCards';
 import '../styles/recipes.css';
+import MealsFilterButtons from '../components/MealsFilterButtons';
+import DrinksFilterButtons from '../components/DrinksFilterButtons';
 
 export default class Recipes extends Component {
   state = {
@@ -35,6 +37,12 @@ export default class Recipes extends Component {
     });
   };
 
+  filterRecipes = (recipes) => {
+    this.setState({
+      recipes,
+    });
+  };
+
   render() {
     const { recipes, recipeType, pageName, hasSearchIcon } = this.state;
     return (
@@ -44,6 +52,9 @@ export default class Recipes extends Component {
           {recipeType === '/meals' ? <MealsCards recipes={ recipes } />
             : <DrinksCards recipes={ recipes } /> }
         </main>
+        {recipeType === '/meals'
+          ? <MealsFilterButtons filterRecipes={ this.filterRecipes } />
+          : <DrinksFilterButtons filterRecipes={ this.filterRecipes } />}
         <Footer />
       </div>
     );
