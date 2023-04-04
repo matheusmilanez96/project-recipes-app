@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 import MealsCards from '../components/MealsCards';
 import DrinksCards from '../components/DrinksCards';
 import '../styles/recipes.css';
@@ -9,6 +10,8 @@ export default class Recipes extends Component {
   state = {
     recipeType: '/meals',
     recipes: '',
+    pageName: '',
+    hasSearchIcon: true,
   };
 
   componentDidMount() {
@@ -32,14 +35,14 @@ export default class Recipes extends Component {
   };
 
   render() {
-    const { recipes, recipeType } = this.state;
+    const { recipes, recipeType, pageName, hasSearchIcon } = this.state;
     return (
       <div>
         Recipes
+        <Header pageName={ pageName } hasSearchIcon={ hasSearchIcon } />
         <main>
           {recipeType === '/meals' ? <MealsCards recipes={ recipes } />
             : <DrinksCards recipes={ recipes } /> }
-          ;
         </main>
         <Footer />
       </div>
