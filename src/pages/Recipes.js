@@ -47,7 +47,11 @@ export default class Recipes extends Component {
     const { recipes, recipeType, pageName, hasSearchIcon } = this.state;
     return (
       <div className="recipes-first-div">
-        <Header pageName={ pageName } hasSearchIcon={ hasSearchIcon } />
+        <Header
+          pageName={ pageName }
+          hasSearchIcon={ hasSearchIcon }
+          recipeType={ recipeType }
+        />
         <main className="main-recipes">
           {recipeType === '/meals' ? <MealsCards recipes={ recipes } />
             : <DrinksCards recipes={ recipes } /> }
