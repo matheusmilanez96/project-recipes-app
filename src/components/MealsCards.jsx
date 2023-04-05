@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class MealsCards extends Component {
   render() {
     const twelve = 12;
-    const { recipes: { meals } } = this.props;
+    const { recipes: { meals }, history } = this.props;
     return (
       <div>
         Receitas
@@ -12,9 +12,11 @@ class MealsCards extends Component {
           if (index < twelve) {
             const card = (
               <div
+                role="presentation"
                 data-testid={ `${index}-recipe-card` }
                 key={ curr.strMeal }
                 className="meal-card"
+                onClick={ () => history.push(`/meals/${curr.idMeal}`) }
               >
                 <img
                   src={ curr.strMealThumb }

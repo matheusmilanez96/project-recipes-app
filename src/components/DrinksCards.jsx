@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class DrinksCards extends Component {
   render() {
     const twelve = 12;
-    const { recipes: { drinks } } = this.props;
+    const { recipes: { drinks }, history } = this.props;
     return (
       <div>
         Receitas
@@ -12,9 +12,11 @@ class DrinksCards extends Component {
           if (index < twelve) {
             const card = (
               <div
+                role="presentation"
                 data-testid={ `${index}-recipe-card` }
                 key={ curr.strDrink }
                 className="drink-card"
+                onClick={ () => history.push(`/drinks/${curr.idDrink}`) }
               >
                 <img
                   src={ curr.strDrinkThumb }
@@ -37,6 +39,6 @@ DrinksCards.propTypes = {
   recipes: PropTypes.shape({
     drinks: PropTypes.arrayOf,
   }).isRequired,
-};
+}.isRequired;
 
 export default DrinksCards;
