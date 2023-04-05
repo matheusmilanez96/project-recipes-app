@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 class SearchBar extends Component {
@@ -14,6 +15,10 @@ class SearchBar extends Component {
     });
   };
 
+  triggerAlert = () => {
+    global.alert('Sorry, we haven\'t found any recipes for these filters.');
+  };
+
   verifyMealsFirstLetter = async (letter) => {
     if (letter.length === 1) {
       const data = await (await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`)).json();
@@ -24,6 +29,10 @@ class SearchBar extends Component {
         () => {
           const { searchResponse } = this.state;
           console.log(searchResponse);
+          if (!searchResponse.meals) {
+            this.triggerAlert();
+            return;
+          }
           if (searchResponse.meals.length > 0) {
             this.handleMealsHistory(searchResponse);
           }
@@ -36,7 +45,6 @@ class SearchBar extends Component {
 
   handleMealsAPIs = async () => {
     const { searchInput, searchType } = this.state;
-
     if (searchType === 'ingredient') {
       const data = await (await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInput}`)).json();
       this.setState(
@@ -46,6 +54,10 @@ class SearchBar extends Component {
         () => {
           const { searchResponse } = this.state;
           console.log(searchResponse);
+          if (!searchResponse.meals) {
+            this.triggerAlert();
+            return;
+          }
           if (searchResponse.meals.length > 0) {
             this.handleMealsHistory(searchResponse);
           }
@@ -62,13 +74,16 @@ class SearchBar extends Component {
         () => {
           const { searchResponse } = this.state;
           console.log(searchResponse);
+          if (!searchResponse.meals) {
+            this.triggerAlert();
+            return;
+          }
           if (searchResponse.meals.length > 0) {
             this.handleMealsHistory(searchResponse);
           }
         },
       );
     }
-
     if (searchType === 'first-letter') {
       this.verifyMealsFirstLetter(searchInput);
     }
@@ -84,6 +99,10 @@ class SearchBar extends Component {
         () => {
           const { searchResponse } = this.state;
           console.log(searchResponse);
+          if (!searchResponse.drinks) {
+            this.triggerAlert();
+            return;
+          }
           if (searchResponse.drinks.length > 0) {
             this.handleDrinksHistory(searchResponse);
           }
@@ -96,7 +115,6 @@ class SearchBar extends Component {
 
   handleDrinksAPIs = async () => {
     const { searchInput, searchType } = this.state;
-
     if (searchType === 'ingredient') {
       const data = await (await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInput}`)).json();
       this.setState(
@@ -106,6 +124,10 @@ class SearchBar extends Component {
         () => {
           const { searchResponse } = this.state;
           console.log(searchResponse);
+          if (!searchResponse.drinks) {
+            this.triggerAlert();
+            return;
+          }
           if (searchResponse.drinks.length > 0) {
             this.handleDrinksHistory(searchResponse);
           }
@@ -122,6 +144,10 @@ class SearchBar extends Component {
         () => {
           const { searchResponse } = this.state;
           console.log(searchResponse);
+          if (!searchResponse.drinks) {
+            this.triggerAlert();
+            return;
+          }
           if (searchResponse.drinks.length > 0) {
             this.handleDrinksHistory(searchResponse);
           }
@@ -129,14 +155,11 @@ class SearchBar extends Component {
       );
     }
 
-    if (searchType === 'first-letter') {
-      this.verifyDrinksFirstLetter(searchInput);
-    }
+    if (searchType === 'first-letter') this.verifyDrinksFirstLetter(searchInput);
   };
 
   handleMealsHistory = (data) => {
     const { history } = this.props;
-
     if (data.meals.length === 1) {
       history.push(`/meals/${data.meals[0].idMeal}`);
     }
@@ -222,4 +245,4 @@ SearchBar.propTypes = {
   apiType: PropTypes.string,
 }.isRequired;
 
-export default SearchBar;
+export default withRouter(SearchBar);
