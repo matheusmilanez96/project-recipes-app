@@ -22,10 +22,15 @@
 }
 
 .recipe-card-img {
-  max-width: 5rem;
+  max-width: 2rem;
 }
 
 .meal-card, .drink-card {
   display: flex;
   flex-wrap: wrap;
+}
+
+.meal-filter-btn-div, .drink-filter-btn-div {
+  display: flex;
+  flex-flow: row wrap;
 }
