@@ -11,13 +11,17 @@ export default class Profile extends Component {
 
   render() {
     const { pageName, hasSearchIcon } = this.state;
-    const user = JSON.parse(localStorage.getItem('user'));
+    let email = '';
+    if (localStorage.getItem('user') !== null) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      email = user.email;
+    }
     return (
       <div>
         <Header pageName={ pageName } hasSearchIcon={ hasSearchIcon } />
         <div>
           <h4 data-testid="profile-email">
-            { user.email }
+            { email }
           </h4>
           <Link to="/done-recipes">
             <button data-testid="profile-done-btn">
