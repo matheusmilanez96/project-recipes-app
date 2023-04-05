@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 class SearchBar extends Component {
   state = {
     searchInput: '',
     searchType: '',
-    searchResponse: '',
+    searchResponse: { meals: [] },
   };
 
   handleChange = ({ target: { name, value } }) => {
@@ -14,40 +14,148 @@ class SearchBar extends Component {
     });
   };
 
-  verifyFirstLetter = async (letter) => {
-    const { searchResponse } = this.state;
+  verifyMealsFirstLetter = async (letter) => {
     if (letter.length === 1) {
-      let data = '';
-      data = await (await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`)).json();
-      this.setState({
-        searchResponse: data,
-      });
-      console.log(searchResponse);
+      const data = await (await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`)).json();
+      this.setState(
+        {
+          searchResponse: data,
+        },
+        () => {
+          const { searchResponse } = this.state;
+          console.log(searchResponse);
+          if (searchResponse.meals.length > 0) {
+            this.handleMealsHistory(searchResponse);
+          }
+        },
+      );
+    } else {
+      return global.alert('Your search must have only 1 (one) character');
     }
-    return global.alert('Your search must have only 1 (one) character');
   };
 
-  handleAPIs = async () => {
-    const { searchInput, searchType, searchResponse } = this.state;
+  handleMealsAPIs = async () => {
+    const { searchInput, searchType } = this.state;
 
     if (searchType === 'ingredient') {
       const data = await (await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInput}`)).json();
-      this.setState({
-        searchResponse: data,
-      });
-      console.log(searchResponse);
+      this.setState(
+        {
+          searchResponse: data,
+        },
+        () => {
+          const { searchResponse } = this.state;
+          console.log(searchResponse);
+          if (searchResponse.meals.length > 0) {
+            this.handleMealsHistory(searchResponse);
+          }
+        },
+      );
     }
 
     if (searchType === 'name') {
       const data = await (await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`)).json();
-      this.setState({
-        searchResponse: data,
-      });
-      console.log(searchResponse);
+      this.setState(
+        {
+          searchResponse: data,
+        },
+        () => {
+          const { searchResponse } = this.state;
+          console.log(searchResponse);
+          if (searchResponse.meals.length > 0) {
+            this.handleMealsHistory(searchResponse);
+          }
+        },
+      );
     }
 
     if (searchType === 'first-letter') {
-      this.verifyFirstLetter(searchInput);
+      this.verifyMealsFirstLetter(searchInput);
+    }
+  };
+
+  verifyDrinksFirstLetter = async (letter) => {
+    if (letter.length === 1) {
+      const data = await (await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letter}`)).json();
+      this.setState(
+        {
+          searchResponse: data,
+        },
+        () => {
+          const { searchResponse } = this.state;
+          console.log(searchResponse);
+          if (searchResponse.drinks.length > 0) {
+            this.handleDrinksHistory(searchResponse);
+          }
+        },
+      );
+    } else {
+      return global.alert('Your search must have only 1 (one) character');
+    }
+  };
+
+  handleDrinksAPIs = async () => {
+    const { searchInput, searchType } = this.state;
+
+    if (searchType === 'ingredient') {
+      const data = await (await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInput}`)).json();
+      this.setState(
+        {
+          searchResponse: data,
+        },
+        () => {
+          const { searchResponse } = this.state;
+          console.log(searchResponse);
+          if (searchResponse.drinks.length > 0) {
+            this.handleDrinksHistory(searchResponse);
+          }
+        },
+      );
+    }
+
+    if (searchType === 'name') {
+      const data = await (await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput}`)).json();
+      this.setState(
+        {
+          searchResponse: data,
+        },
+        () => {
+          const { searchResponse } = this.state;
+          console.log(searchResponse);
+          if (searchResponse.drinks.length > 0) {
+            this.handleDrinksHistory(searchResponse);
+          }
+        },
+      );
+    }
+
+    if (searchType === 'first-letter') {
+      this.verifyDrinksFirstLetter(searchInput);
+    }
+  };
+
+  handleMealsHistory = (data) => {
+    const { history } = this.props;
+
+    if (data.meals.length === 1) {
+      history.push(`/meals/${data.meals[0].idMeal}`);
+    }
+  };
+
+  handleDrinksHistory = (data) => {
+    const { history } = this.props;
+
+    if (data.drinks.length === 1) {
+      history.push(`/drinks/${data.drinks[0].idDrink}`);
+    }
+  };
+
+  handlePathName = async () => {
+    const { apiType } = this.props;
+    if (apiType === '/meals') {
+      await this.handleMealsAPIs();
+    } else {
+      await this.handleDrinksAPIs();
     }
   };
 
@@ -97,7 +205,7 @@ class SearchBar extends Component {
         </section>
         <button
           type="button"
-          onClick={ this.handleAPIs }
+          onClick={ this.handlePathName }
           data-testid="exec-search-btn"
         >
           Buscar
@@ -108,7 +216,10 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
-
-};
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+  apiType: PropTypes.string,
+}.isRequired;
 
 export default SearchBar;

@@ -34,9 +34,8 @@ class MealsCards extends Component {
 }
 
 MealsCards.propTypes = {
-  recipes: PropTypes.shape({
-    meals: PropTypes.arrayOf,
-  }).isRequired,
-};
+  recipes: PropTypes.string,
+  meals: PropTypes.arrayOf(PropTypes.string),
+}.isRequired;
 
 export default MealsCards;
