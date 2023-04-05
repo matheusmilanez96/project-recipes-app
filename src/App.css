@@ -10,6 +10,10 @@
   width: 100%;
 }
 
+.recipeImg {
+  max-height: 200px;
+}
+
 .footer {
   bottom: 0;
   position: fixed;
@@ -70,4 +74,8 @@
   100% {
     transform: rotate(-10deg);
   }
+}
+
+.instructionsText {
+  font-size: 6px;
 }
