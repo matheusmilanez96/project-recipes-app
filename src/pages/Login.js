@@ -52,7 +52,6 @@ class Login extends React.Component {
             dispatch(saveUserGlobal(this.state));
             saveUserLocal(email);
             history.push('/meals');
-            console.log('Ao clicar, envie a informação do formulário');
           } }
         >
           <div>
