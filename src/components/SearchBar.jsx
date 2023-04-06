@@ -153,17 +153,21 @@ class SearchBar extends Component {
   };
 
   handleMealsHistory = (data) => {
-    const { history } = this.props;
+    const { history, filterRecipes } = this.props;
     if (data.meals.length === 1) {
       history.push(`/meals/${data.meals[0].idMeal}`);
+    } else {
+      filterRecipes(data);
     }
   };
 
   handleDrinksHistory = (data) => {
-    const { history } = this.props;
+    const { history, filterRecipes } = this.props;
 
     if (data.drinks.length === 1) {
       history.push(`/drinks/${data.drinks[0].idDrink}`);
+    } else {
+      filterRecipes(data);
     }
   };
 
