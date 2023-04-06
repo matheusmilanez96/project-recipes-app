@@ -59,6 +59,7 @@ export default class Recipes extends Component {
           pageName={ pageName }
           hasSearchIcon={ hasSearchIcon }
           recipeType={ recipeType }
+          filterRecipes={ (e) => this.filterRecipes(e) }
         />
         <main className="main-recipes">
           {recipeType === '/meals'
