@@ -28,7 +28,6 @@ class SearchBar extends Component {
         },
         () => {
           const { searchResponse } = this.state;
-          console.log(searchResponse);
           if (!searchResponse.meals) {
             this.triggerAlert();
             return;
@@ -53,7 +52,6 @@ class SearchBar extends Component {
         },
         () => {
           const { searchResponse } = this.state;
-          console.log(searchResponse);
           if (!searchResponse.meals) {
             this.triggerAlert();
             return;
@@ -73,7 +71,6 @@ class SearchBar extends Component {
         },
         () => {
           const { searchResponse } = this.state;
-          console.log(searchResponse);
           if (!searchResponse.meals) {
             this.triggerAlert();
             return;
@@ -98,7 +95,6 @@ class SearchBar extends Component {
         },
         () => {
           const { searchResponse } = this.state;
-          console.log(searchResponse);
           if (!searchResponse.drinks) {
             this.triggerAlert();
             return;
@@ -123,7 +119,6 @@ class SearchBar extends Component {
         },
         () => {
           const { searchResponse } = this.state;
-          console.log(searchResponse);
           if (!searchResponse.drinks) {
             this.triggerAlert();
             return;
@@ -143,7 +138,6 @@ class SearchBar extends Component {
         },
         () => {
           const { searchResponse } = this.state;
-          console.log(searchResponse);
           if (!searchResponse.drinks) {
             this.triggerAlert();
             return;

@@ -8,7 +8,6 @@ export default class RecipeDetails extends Component {
   // }
 
   render() {
-    console.log('teste');
     return (
       <div>
         RecipeDetails
