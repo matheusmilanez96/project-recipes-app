@@ -19,6 +19,7 @@ export default class RecipeInProgress extends Component {
     this.getMealObj = this.getMealObj.bind(this);
     this.getDrinkObj = this.getDrinkObj.bind(this);
   }
+  // .
 
   async componentDidMount() {
     const { history: { location: { pathname } } } = this.props;
