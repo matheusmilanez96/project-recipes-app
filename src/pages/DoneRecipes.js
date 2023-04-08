@@ -1,51 +1,79 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
+import DoneRecipeCard from '../components/DoneRecipeCard';
 
 export default class DoneRecipes extends Component {
   state = {
     pageName: 'Done Recipes',
     hasSearchIcon: false,
+    filteredRecipes: [],
   };
 
-  componentDidMount() { this.getDoneRecepies(); }
+  componentDidMount() {
+    const getDoneRecepies = JSON.parse(localStorage.getItem('doneRecipes'));
+    this.setState({
+      filteredRecipes: getDoneRecepies,
+    });
+  }
 
-  getDoneRecepies = () => JSON.parse(localStorage.getItem('doneRecipes'));
+  resetFilteredRecipes = () => {
+    const getDoneRecepies = JSON.parse(localStorage.getItem('doneRecipes'));
+    this.setState({
+      filteredRecipes: getDoneRecepies,
+    });
+  };
+
+  handleFilters = (filterName) => {
+    const getDoneRecepies = JSON.parse(localStorage.getItem('doneRecipes'));
+    const searchedRecipes = getDoneRecepies
+      .filter((doneRecipe) => doneRecipe.type.includes(filterName));
+    this.setState({
+      filteredRecipes: searchedRecipes,
+    });
+  };
 
   render() {
     const { pageName, hasSearchIcon } = this.state;
-    const allDoneRecipes = this.getDoneRecepies();
+    const { filteredRecipes } = this.state;
+    console.log(filteredRecipes);
     return (
       <div>
         <Header pageName={ pageName } hasSearchIcon={ hasSearchIcon } />
-        <button data-testid="filter-by-all-btn">All</button>
-        <button data-testid="filter-by-meal-btn">Meals</button>
-        <button data-testid="filter-by-drink-btn">Drinks</button>
-        { allDoneRecipes.map((doneRecipe, index) => (
-          <div className="recipeCard" key={ index }>
-            <img
-              data-testid={ `${index}-horizontal-image` }
-              src={ doneRecipe.strMealThumb }
-              alt="recipe"
+        <button
+          data-testid="filter-by-all-btn"
+          onClick={ () => this.resetFilteredRecipes() }
+        >
+          All
+        </button>
+        <button
+          data-testid="filter-by-meal-btn"
+          onClick={ () => this.handleFilters('meal') }
+        >
+          Meals
+        </button>
+        <button
+          data-testid="filter-by-drink-btn"
+          onClick={ () => this.handleFilters('drink') }
+        >
+          Drinks
+        </button>
+        <section style={ { display: 'flex', flexWrap: 'wrap', flexDirection: 'row' } }>
+          {filteredRecipes.map((recipe, index) => (
+            <DoneRecipeCard
+              key={ index }
+              index={ index }
+              image={ recipe.image }
+              name={ recipe.name }
+              category={ `${recipe.nationality} 
+            - ${recipe.category}` }
+              alcoholic={ `- ${recipe.alcoholicOrNot}` }
+              doneDate={ recipe.doneDate }
+              tags={ recipe.tags }
+              type={ recipe.type }
+              id={ recipe.id }
             />
-            <p data-testid={ `${index}-horizontal-top-text` }>{doneRecipe.strCategory}</p>
-            <p data-testid={ `${index}-horizontal-name` }>{doneRecipe.strMeal}</p>
-            <p data-testid={ `${index}-horizontal-done-date` }>
-              {doneRecipe.dateModified}
-            </p>
-            <button
-              data-testid={ `${index}-horizontal-share-btn` }
-            >
-              Compartilhar a receita
-            </button>
-            {(doneRecipe.strTags === null)
-              ? <div data-testid={ `${index}-${doneRecipe.strTags}-horizontal-tag` } />
-              : (
-                <div data-testid={ `${index}-${doneRecipe.strTags}-horizontal-tag` }>
-                  {doneRecipe.strTags.map((tag) => <p key={ tag }>{tag}</p>)}
-                </div>
-              )}
-          </div>
-        ))}
+          ))}
+        </section>
       </div>
     );
   }
