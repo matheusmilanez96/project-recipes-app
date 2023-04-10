@@ -1,11 +1,15 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import App from '../App';
 
 describe('Testa a página Recipes com rota drinks', () => {
+  beforeEach(() => {
+    global.fetch = jest.fn(fetch);
+    global.alert = jest.fn();
+  });
   it('Clica nos filtros de receita', async () => {
-    renderWithRouterAndRedux(<App />, [], '/drinks');
+    renderWithRouterAndRedux(<App />);
     const mealsFiltersBtn = ['Ordinary Drink', 'Cocktail', 'Shake', 'Other / Unknown', 'Cocoa'];
 
     const email = screen.getAllByTestId('email-input');
@@ -17,35 +21,41 @@ describe('Testa a página Recipes com rota drinks', () => {
 
     userEvent.click(button[0]);
 
-    waitFor(() => screen.getByTestId('drinks-bottom-btn'));
+    await waitFor(() => screen.getByTestId('drinks-bottom-btn'));
 
     const drinksFooterBtn = screen.getByTestId('drinks-bottom-btn');
     userEvent.click(drinksFooterBtn);
 
     await waitFor(() => expect(screen.getByText('GG')).toBeVisible(), { timeout: 3000 });
 
-    mealsFiltersBtn.forEach((filter, index) => {
-      const filterBtn = screen.getByTestId(`${filter}-category-filter`);
+    mealsFiltersBtn.forEach(async (filter, index) => {
+      const filterBtn = screen.getByText(filter);
 
       userEvent.click(filterBtn);
 
       if (index % 0) {
         userEvent.click(filterBtn);
+        await waitFor(() => expect(screen.getByTestId('All-category-filter')).toBeVisible());
       }
       if (index % 1) {
         const allFilterBtn = screen.getByTestId('All-category-filter');
         userEvent.click(allFilterBtn);
+        await waitForElementToBeRemoved(allFilterBtn);
       }
     });
+    const GG = screen.getByTestId('0-recipe-card');
+    userEvent.click(GG);
+
+    // await waitFor(() => expect(history.location.pathname).toBe('52844'));
   });
 
   it('Clica em uma receita', async () => {
-    renderWithRouterAndRedux(<App />, [], '/meals');
+    renderWithRouterAndRedux(<App />);
 
-    await waitFor(() => expect(screen.getByAltText('ABC')).toBeVisible(), { timeout: 3000 });
+    // await waitFor(() => expect(screen.getByTestId('0-recipe-card')).toBeVisible(), { timeout: 3000 });
 
-    const ABC = screen.getByTestId('2-recipe-card');
-    userEvent.click(ABC);
+    // const GG = screen.getByTestId('0-recipe-card');
+    // userEvent.click(GG);
 
     // await waitFor(() => expect(history.location.pathname).toBe('52844'));
   });

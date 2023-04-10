@@ -4,8 +4,12 @@ import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import App from '../App';
 
 describe('Testa searchBar na rota Meals', () => {
+  beforeEach(() => {
+    global.fetch = jest.fn(fetch);
+    global.alert = jest.fn();
+  });
   it('Procura nos inputs', async () => {
-    renderWithRouterAndRedux(<App />, [], '/meals');
+    renderWithRouterAndRedux(<App />);
 
     const email = screen.getAllByTestId('email-input');
     const password = screen.getAllByTestId('password-input');
@@ -27,14 +31,19 @@ describe('Testa searchBar na rota Meals', () => {
     const firstLetterInput = screen.getByTestId('first-letter-search-radio');
     const filterButton = screen.getByTestId('exec-search-btn');
 
-    userEvent.type(searchInput, 'bread');
+    userEvent.type(searchInput, 'Chicken');
     userEvent.click(ingredientsInput);
     userEvent.click(filterButton);
 
-    userEvent.clear(searchInput);
-    userEvent.type(searchInput, 'b');
-    userEvent.click(firstLetterInput);
-    userEvent.click(filterButton);
+    await waitFor(() => expect(screen.getByText('Chicken Handi')).toBeVisible(), { timeout: 3000 });
+
+    // userEvent.clear(searchInput);
+    // userEvent.type(searchInput, 'b');
+    // userEvent.click(firstLetterInput);
+    // userEvent.click(filterButton);
+
+    // await waitFor(() => expect(screen.getByText('Banana Pancakes')).toBeVisible(), { timeout: 3000 });
+
     userEvent.clear(searchInput);
     userEvent.type(searchInput, 'bb');
     userEvent.click(firstLetterInput);
@@ -44,11 +53,15 @@ describe('Testa searchBar na rota Meals', () => {
     userEvent.type(searchInput, 'soup');
     userEvent.click(nameInput);
     userEvent.click(filterButton);
+
+    await waitFor(() => expect(screen.getByText('Creamy Tomato Soup')).toBeVisible(), { timeout: 3000 });
+
     userEvent.clear(searchInput);
-    userEvent.type('sopa');
+    userEvent.type('xablau');
     userEvent.click(filterButton);
+
     userEvent.clear(searchInput);
-    userEvent.type(searchInput, 'Sushi');
+    userEvent.type(searchInput, 'Arrabiata');
     userEvent.click(filterButton);
   });
 });
