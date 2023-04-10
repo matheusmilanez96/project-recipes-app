@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class MealsCards extends Component {
-  selectedRecipe = (param) => {
-    const { history } = this.props;
-    history.push(`/meals/${param}`);
-    console.log(param);
-  };
-
   render() {
     const twelve = 12;
     const { recipes: { meals }, history } = this.props;
@@ -20,7 +14,7 @@ class MealsCards extends Component {
               <div
                 role="presentation"
                 data-testid={ `${index}-recipe-card` }
-                key={ curr.idMeal }
+                key={ curr.strMeal }
                 className="meal-card"
                 onClick={ () => history.push(`/meals/${curr.idMeal}`) }
               >
@@ -31,7 +25,7 @@ class MealsCards extends Component {
                   data-testid={ `${index}-card-img` }
                 />
                 <div data-testid={ `${index}-card-name` }>{curr.strMeal}</div>
-              </button>);
+              </div>);
             acc.push(card);
           }
           return acc;
@@ -42,8 +36,12 @@ class MealsCards extends Component {
 }
 
 MealsCards.propTypes = {
-  recipes: PropTypes.string,
-  meals: PropTypes.arrayOf(PropTypes.string),
-}.isRequired;
+  recipes: PropTypes.shape({
+    meals: PropTypes.arrayOf,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default MealsCards;
