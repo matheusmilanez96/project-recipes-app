@@ -1,4 +1,4 @@
-import { screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import App from '../App';
@@ -35,12 +35,10 @@ describe('Testa a página Recipes com rota drinks', () => {
 
       if (index % 0) {
         userEvent.click(filterBtn);
-        await waitFor(() => expect(screen.getByTestId('All-category-filter')).toBeVisible());
       }
       if (index % 1) {
         const allFilterBtn = screen.getByTestId('All-category-filter');
         userEvent.click(allFilterBtn);
-        await waitForElementToBeRemoved(allFilterBtn);
       }
     });
     const GG = screen.getByTestId('0-recipe-card');

@@ -58,7 +58,7 @@ export default class DoneRecipes extends Component {
           Drinks
         </button>
         <section style={ { display: 'flex', flexWrap: 'wrap', flexDirection: 'row' } }>
-          {filteredRecipes.map((recipe, index) => (
+          {filteredRecipes && filteredRecipes.map((recipe, index) => (
             <DoneRecipeCard
               key={ index }
               index={ index }
