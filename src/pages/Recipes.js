@@ -54,7 +54,7 @@ export default class Recipes extends Component {
     const { recipes, recipeType, pageName, hasSearchIcon } = this.state;
     const { history } = this.props;
     return (
-      <div className="recipes-first-div">
+      <div className="recipes-first-div scroller">
         <Header
           pageName={ pageName }
           hasSearchIcon={ hasSearchIcon }

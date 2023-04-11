@@ -10,6 +10,14 @@
   width: 100%;
 }
 
+.scroller {
+  height: 640px;
+  overflow-y: scroll;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
+  width: 360px;
+}
+
 .recipeImg {
   max-height: 200px;
 }
@@ -74,10 +82,6 @@
   100% {
     transform: rotate(-10deg);
   }
-}
-
-.instructionsText {
-  font-size: 6px;
 }
 
 .recommended-carousel {

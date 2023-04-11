@@ -37,7 +37,7 @@ export default class DoneRecipes extends Component {
     const { filteredRecipes } = this.state;
     console.log(filteredRecipes);
     return (
-      <div>
+      <div className="scroller">
         <Header pageName={ pageName } hasSearchIcon={ hasSearchIcon } />
         <button
           data-testid="filter-by-all-btn"

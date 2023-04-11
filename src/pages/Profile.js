@@ -17,7 +17,7 @@ export default class Profile extends Component {
       email = user.email;
     }
     return (
-      <div>
+      <div className="scroller">
         <Header pageName={ pageName } hasSearchIcon={ hasSearchIcon } />
         <div>
           <h4 data-testid="profile-email">

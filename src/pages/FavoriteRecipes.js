@@ -71,7 +71,7 @@ export default class FavoriteRecipes extends Component {
     const { pageName, hasSearchIcon } = this.state;
     const { filteredRecipes } = this.state;
     return (
-      <div>
+      <div className="scroller">
         <Header pageName={ pageName } hasSearchIcon={ hasSearchIcon } />
         <button
           data-testid="filter-by-all-btn"

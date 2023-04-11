@@ -79,7 +79,7 @@ export default class RecipeDetails extends Component {
     } = this.state;
 
     return (
-      <div>
+      <div className="scroller">
         <img
           src={ thumbnail }
           alt="img"
