@@ -56,7 +56,7 @@ describe('Testa searchBar na rota Drinks', () => {
     userEvent.type(searchInput, 'xablau');
     userEvent.click(ingredientsInput);
     userEvent.click(filterButton);
-    // await waitFor(() => expect(global.alert).toHaveBeenCalledTimes(3));
+    await waitFor(() => expect(global.alert).toHaveBeenCalledTimes(3));
   });
   it('Procura nos inputs', async () => {
     global.fetch = jest.fn(fetch);
