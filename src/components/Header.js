@@ -17,7 +17,7 @@ export default class Header extends Component {
   };
 
   render() {
-    const { pageName, hasSearchIcon, recipeType } = this.props;
+    const { pageName, hasSearchIcon, recipeType, filterRecipes } = this.props;
     const { isSearchActive } = this.state;
     return (
       <div data-testid="header" className="header">
@@ -42,7 +42,7 @@ export default class Header extends Component {
         </Link>
         {(isSearchActive === true)
         && (
-          <SearchBar apiType={ recipeType } />
+          <SearchBar apiType={ recipeType } filterRecipes={ filterRecipes } />
         )}
         <p name={ pageName } data-testid="page-title">{ pageName }</p>
       </div>

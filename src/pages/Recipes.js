@@ -43,6 +43,13 @@ export default class Recipes extends Component {
     });
   };
 
+  changePageName = (newName) => {
+    this.setState({
+      recipeType: newName,
+      pageName: newName === '/meals' ? 'Meals' : 'Drinks',
+    }, this.fetchRecipes);
+  };
+
   render() {
     const { recipes, recipeType, pageName, hasSearchIcon } = this.state;
     const { history } = this.props;
@@ -52,6 +59,7 @@ export default class Recipes extends Component {
           pageName={ pageName }
           hasSearchIcon={ hasSearchIcon }
           recipeType={ recipeType }
+          filterRecipes={ (e) => this.filterRecipes(e) }
         />
         <main className="main-recipes">
           {recipeType === '/meals'
@@ -61,7 +69,7 @@ export default class Recipes extends Component {
         {recipeType === '/meals'
           ? <MealsFilterButtons filterRecipes={ this.filterRecipes } />
           : <DrinksFilterButtons filterRecipes={ this.filterRecipes } />}
-        <Footer />
+        <Footer changePageName={ this.changePageName } />
       </div>
     );
   }
