@@ -6,6 +6,12 @@ import RecipeVideo from '../components/RecipeVideo';
 import Recommended from '../components/Recommended';
 
 export default class RecipeDetails extends Component {
+  constructor() {
+    super();
+
+    this.startClick = this.startClick.bind(this);
+  }
+
   state = {
     thumbnail: '',
     title: '',
@@ -49,6 +55,14 @@ export default class RecipeDetails extends Component {
         recommended,
       });
     }
+  }
+
+  startClick() {
+    const { history: { location: { pathname } } } = this.props;
+    const { history } = this.props;
+    const id = pathname.split('/')[2];
+
+    history.push(`${id}/in-progress`);
   }
 
   render() {
@@ -97,6 +111,7 @@ export default class RecipeDetails extends Component {
           type="button"
           data-testid="start-recipe-btn"
           className="start-recipe-btn"
+          onClick={ () => this.startClick() }
         >
           Start Recipe
         </button>
@@ -110,5 +125,6 @@ RecipeDetails.propTypes = {
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
     }).isRequired,
+    push: PropTypes.func,
   }).isRequired,
 };
