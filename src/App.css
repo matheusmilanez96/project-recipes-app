@@ -77,5 +77,16 @@
 }
 
 .instructionsText {
-  font-size: 6px;
+  font-size: 1rem;
+}
+
+.recommended-carousel {
+  display: flex;
+  flex-direction: row;
+}
+
+/* requisito 28: posição do botão de iniciar receita */
+.start-recipe-btn {
+  bottom: 0;
+  position: fixed;
 }
