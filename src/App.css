@@ -11,11 +11,11 @@
 }
 
 .scroller {
-  height: auto;
+  height: 640px;
   overflow-y: scroll visible;
   scrollbar-color: rebeccapurple green;
   scrollbar-width: thin;
-  width: 350px;
+  width: 360px;
 }
 
 .recipeImg {
