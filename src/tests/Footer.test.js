@@ -5,7 +5,7 @@ import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import App from '../App';
 
 describe('Testa o componente Footer', () => {
-  it('Testa se o footer e seus elementos estão presentes na tela principal', () => {
+  it('Testa se o footer e seus elementos estão presentes na tela principal', async () => {
     renderWithRouterAndRedux(<App />);
 
     const email = screen.getByTestId('email-input');
@@ -17,7 +17,7 @@ describe('Testa o componente Footer', () => {
 
     userEvent.click(button);
 
-    waitFor(() => screen.getByTestId('footer').toBeInTheDocument());
+    await waitFor(() => expect(screen.getByTestId('footer')).toBeInTheDocument());
 
     const footer = screen.getByTestId('footer');
     const drinkIcon = screen.getByTestId('drinks-bottom-btn');
@@ -28,31 +28,31 @@ describe('Testa o componente Footer', () => {
     expect(mealIcon).toBeInTheDocument();
   });
 
-  it('Testa se o footer está presente na tela de perfil', () => {
+  it('Testa se o footer está presente na tela de perfil', async () => {
     renderWithRouterAndRedux(<App />);
 
-    waitFor(() => screen.getByTestId('footer').toBeInTheDocument());
+    await waitFor(() => expect(screen.getByTestId('footer')).toBeInTheDocument());
 
     const footer = screen.getByTestId('footer');
 
     expect(footer).toBeInTheDocument();
   });
 
-  it('Testa se o botão drink leva à página correta', () => {
-    const { history } = renderWithRouterAndRedux(<App />);
+  it('Testa se o botão drink leva à página correta', async () => {
+    renderWithRouterAndRedux(<App />);
 
     const drinkIcon = screen.getByTestId('drinks-bottom-btn');
     userEvent.click(drinkIcon);
 
-    waitFor(() => expect(history.location.pathname).toBe('/drinks'));
+    await waitFor(() => expect(screen.getByTestId('Cocoa-category-filter')).toBeVisible());
   });
 
-  it('Testa se o botão meal leva à página correta', () => {
-    const { history } = renderWithRouterAndRedux(<App />);
+  it('Testa se o botão meal leva à página correta', async () => {
+    renderWithRouterAndRedux(<App />);
 
     const mealIcon = screen.getByTestId('meals-bottom-btn');
     userEvent.click(mealIcon);
 
-    waitFor(() => expect(history.location.pathname).toBe('/meals'));
+    await waitFor(() => expect(screen.getByTestId('Beef-category-filter')).toBeVisible());
   });
 });

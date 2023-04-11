@@ -63,23 +63,6 @@ describe('Testa searchBar na rota Drinks', () => {
     global.alert = jest.fn();
     renderWithRouterAndRedux(<App />);
 
-    // const email = screen.getAllByTestId('email-input');
-    // const password = screen.getAllByTestId('password-input');
-    // const button = screen.getAllByTestId('login-submit-btn');
-
-    // userEvent.type(email[0], 'final@front.com');
-    // userEvent.type(password[0], '1234567');
-
-    // userEvent.click(button[0]);
-
-    // await waitFor(() => screen.getByTestId('drinks-bottom-btn'));
-
-    // const drinksFooterBtn = screen.getByTestId('drinks-bottom-btn');
-
-    // userEvent.click(drinksFooterBtn);
-
-    // await waitFor(() => expect(screen.getByText('GG')).toBeVisible(), { timeout: 3000 });
-
     const searchBtn = screen.getByTestId('search-top-btn');
     expect(searchBtn).toBeVisible();
     userEvent.click(searchBtn);
@@ -95,13 +78,6 @@ describe('Testa searchBar na rota Drinks', () => {
     userEvent.click(filterButton);
 
     await waitFor(() => expect(screen.getByText('A Night In Old Mandalay')).toBeVisible());
-
-    // userEvent.clear(searchInput);
-    // userEvent.type(searchInput, 's');
-    // userEvent.click(firstLetterInput);
-    // userEvent.click(filterButton);
-
-    // await waitFor(() => expect(screen.getByText('Spaghetti Bolognese')).toBeVisible());
 
     userEvent.clear(searchInput);
     userEvent.type(searchInput, 'gg');
@@ -126,6 +102,6 @@ describe('Testa searchBar na rota Drinks', () => {
     userEvent.type(searchInput, 'Aquamarine');
     userEvent.click(filterButton);
 
-    // fazer um expect do produto que virá
+    await waitFor(() => expect(screen.getByTestId('recipe-title')).toBeVisible(), { timeout: 30000 });
   });
 });
