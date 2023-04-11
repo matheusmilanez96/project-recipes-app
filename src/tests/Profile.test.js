@@ -1,8 +1,10 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { within } from '@testing-library/dom';
 import App from '../App';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
+import Profile from '../pages/Profile';
 
 describe('Testa o componente Profile', () => {
   it('Testa se o profile funciona corretamente', () => {
@@ -31,5 +33,13 @@ describe('Testa o componente Profile', () => {
     const logoutBtn = screen.getByTestId('profile-logout-btn');
     userEvent.click(logoutBtn);
     expect(history.location.pathname).toBe('/');
+  });
+  it('Testa se o profile funciona corretamente quando não há email na localStorage', () => {
+    renderWithRouterAndRedux(<Profile />);
+
+    const emailEl = screen.queryByTestId('profile-email');
+    const { getByText } = within(emailEl);
+    console.log(emailEl);
+    expect(getByText('')).toBeInTheDocument();
   });
 });
