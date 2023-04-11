@@ -152,7 +152,8 @@ export default class RecipeInProgress extends Component {
       checkedIngredients,
     } = this.state;
     return (
-      <div className="scroller">
+      <div className="scroller2">
+        <p>hi</p>
         <img
           src={ thumbnail }
           alt="img"
