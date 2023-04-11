@@ -11,8 +11,8 @@
 }
 
 .scroller {
-  height: 640px;
-  overflow-y: scroll;
+  height: auto;
+  overflow-y: scroll visible;
   scrollbar-color: rebeccapurple green;
   scrollbar-width: thin;
   width: 350px;
