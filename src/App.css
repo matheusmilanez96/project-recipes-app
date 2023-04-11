@@ -90,3 +90,8 @@
   bottom: 0;
   position: fixed;
 }
+
+/* requisito 27: elementos do carrossel */
+.hidden {
+  visibility: hidden;
+}
