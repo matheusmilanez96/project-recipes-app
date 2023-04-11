@@ -57,16 +57,6 @@ describe('Testa searchBar na rota Meals', () => {
     global.alert = jest.fn();
     renderWithRouterAndRedux(<App />);
 
-    // const email = screen.getAllByTestId('email-input');
-    // const password = screen.getAllByTestId('password-input');
-    // const button = screen.getAllByTestId('login-submit-btn');
-
-    // userEvent.type(email[0], 'final@front.com');
-    // userEvent.type(password[0], '1234567');
-
-    // userEvent.click(button[0]);
-    // await waitFor(() => expect(screen.getByText('Beef')).toBeVisible(), { timeout: 3000 });
-
     const searchBtn = screen.getByTestId('search-top-btn');
     expect(searchBtn).toBeVisible();
     userEvent.click(searchBtn);
@@ -104,6 +94,9 @@ describe('Testa searchBar na rota Meals', () => {
 
     userEvent.clear(searchInput);
     userEvent.type(searchInput, 'Arrabiata');
+    userEvent.click(nameInput);
     userEvent.click(filterButton);
+
+    await waitFor(() => expect(screen.getByTestId('recipe-title')).toBeVisible(), { timeout: 30000 });
   });
 });

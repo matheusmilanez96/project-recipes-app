@@ -41,6 +41,6 @@ describe('Testa a página Recipes com rota meals', () => {
     const lasagne = screen.getByTestId('7-recipe-card');
     userEvent.click(lasagne);
 
-    // await waitFor(() => expect(history.location.pathname).toBe('52844'));
+    await waitFor(() => expect(screen.getByTestId('recipe-title')).toBeVisible(), { timeout: 30000 });
   });
 });

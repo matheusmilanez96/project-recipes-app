@@ -32,9 +32,7 @@ class SearchBar extends Component {
             this.triggerAlert();
             return;
           }
-          if (searchResponse.meals.length > 0) {
-            this.handleMealsHistory(searchResponse);
-          }
+          this.handleMealsHistory(searchResponse);
         },
       );
     } else {
@@ -56,9 +54,7 @@ class SearchBar extends Component {
             this.triggerAlert();
             return;
           }
-          if (searchResponse.meals.length > 0) {
-            this.handleMealsHistory(searchResponse);
-          }
+          this.handleMealsHistory(searchResponse);
         },
       );
     }
@@ -75,9 +71,7 @@ class SearchBar extends Component {
             this.triggerAlert();
             return;
           }
-          if (searchResponse.meals.length > 0) {
-            this.handleMealsHistory(searchResponse);
-          }
+          this.handleMealsHistory(searchResponse);
         },
       );
     }
@@ -99,9 +93,7 @@ class SearchBar extends Component {
             this.triggerAlert();
             return;
           }
-          if (searchResponse.drinks.length > 0) {
-            this.handleDrinksHistory(searchResponse);
-          }
+          this.handleDrinksHistory(searchResponse);
         },
       );
     } else {
@@ -112,22 +104,20 @@ class SearchBar extends Component {
   handleDrinksAPIs = async () => {
     const { searchInput, searchType } = this.state;
     if (searchType === 'ingredient') {
-      const data = await (await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInput}`)).json();
-      this.setState(
-        {
-          searchResponse: data,
-        },
-        () => {
-          const { searchResponse } = this.state;
-          if (!searchResponse.drinks) {
-            this.triggerAlert();
-            return;
-          }
-          if (searchResponse.drinks.length > 0) {
+      try {
+        const data = await (await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInput}`)).json();
+        this.setState(
+          {
+            searchResponse: data,
+          },
+          () => {
+            const { searchResponse } = this.state;
             this.handleDrinksHistory(searchResponse);
-          }
-        },
-      );
+          },
+        );
+      } catch (error) {
+        this.triggerAlert();
+      }
     }
 
     if (searchType === 'name') {
@@ -142,9 +132,7 @@ class SearchBar extends Component {
             this.triggerAlert();
             return;
           }
-          if (searchResponse.drinks.length > 0) {
-            this.handleDrinksHistory(searchResponse);
-          }
+          this.handleDrinksHistory(searchResponse);
         },
       );
     }

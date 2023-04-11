@@ -44,17 +44,6 @@ describe('Testa a página Recipes com rota drinks', () => {
     const GG = screen.getByTestId('0-recipe-card');
     userEvent.click(GG);
 
-    // await waitFor(() => expect(history.location.pathname).toBe('52844'));
-  });
-
-  it('Clica em uma receita', async () => {
-    renderWithRouterAndRedux(<App />);
-
-    // await waitFor(() => expect(screen.getByTestId('0-recipe-card')).toBeVisible(), { timeout: 3000 });
-
-    // const GG = screen.getByTestId('0-recipe-card');
-    // userEvent.click(GG);
-
-    // await waitFor(() => expect(history.location.pathname).toBe('52844'));
+    await waitFor(() => expect(screen.getByTestId('recipe-title')).toBeVisible(), { timeout: 30000 });
   });
 });

@@ -5,7 +5,7 @@ import App from '../App';
 
 describe('Testa a página de receitas favoritas', () => {
   it('Entra em favoriteRecipes', async () => {
-    renderWithRouterAndRedux(<App />, [], '/meals');
+    renderWithRouterAndRedux(<App />);
 
     const email = screen.getAllByTestId('email-input');
     const password = screen.getAllByTestId('password-input');
