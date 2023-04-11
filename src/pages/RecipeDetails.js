@@ -71,9 +71,14 @@ export default class RecipeDetails extends Component {
   startClick() {
     const { history: { location: { pathname } } } = this.props;
     const { history } = this.props;
+    const type = pathname.split('/')[1];
     const id = pathname.split('/')[2];
 
-    history.push(`${id}/in-progress`);
+    if (type === 'meals') {
+      history.push(`${id}/in-progress`);
+    } else {
+      history.push('in-progress');
+    }
   }
 
   render() {
