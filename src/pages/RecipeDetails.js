@@ -4,6 +4,8 @@ import filteredIngredients from '../helpers/filteredIngredients';
 import Ingredients from '../components/Ingredients';
 import RecipeVideo from '../components/RecipeVideo';
 import Recommended from '../components/Recommended';
+import shareIcon from '../images/shareIcon.svg';
+import favoriteIcon from '../images/whiteHeartIcon.svg';
 
 export default class RecipeDetails extends Component {
   constructor() {
@@ -20,6 +22,7 @@ export default class RecipeDetails extends Component {
     instructions: '',
     ingredients: '',
     isLoading: false,
+    linkCopied: false,
   };
 
   async componentDidMount() {
@@ -57,6 +60,14 @@ export default class RecipeDetails extends Component {
     }
   }
 
+  copyToClipboard = () => {
+    const { history: { location: { pathname } } } = this.props;
+    navigator.clipboard.writeText(`http://localhost:3000${pathname}`);
+    this.setState({
+      linkCopied: true,
+    });
+  };
+
   startClick() {
     const { history: { location: { pathname } } } = this.props;
     const { history } = this.props;
@@ -76,6 +87,7 @@ export default class RecipeDetails extends Component {
       isLoading,
       video,
       recommended,
+      linkCopied,
     } = this.state;
 
     return (
@@ -85,10 +97,35 @@ export default class RecipeDetails extends Component {
           alt="img"
           data-testid="recipe-photo"
           className="recipeImg"
+          style={ {
+            width: '100%',
+          } }
         />
-        <h2 data-testid="recipe-title">{title}</h2>
-        <button type="button" data-testid="share-btn">Compartilhar</button>
-        <button type="button" data-testid="favorite-btn">Favoritar</button>
+        <h2
+          data-testid="recipe-title"
+        >
+          {title}
+
+        </h2>
+        <div>
+          <button
+            onClick={ () => this.copyToClipboard() }
+          >
+            <img
+              data-testid="share-btn"
+              src={ shareIcon }
+              alt="share icon"
+            />
+          </button>
+          {(linkCopied === true)
+          && <p>Link copied!</p> }
+          <button
+            type="button"
+            data-testid="favorite-btn"
+          >
+            <img src={ favoriteIcon } alt="heart" />
+          </button>
+        </div>
 
         <h4 data-testid="recipe-category">
           { category }
@@ -101,7 +138,17 @@ export default class RecipeDetails extends Component {
           : <p>Loading...</p>}
 
         <h4>Instructions</h4>
-        <div data-testid="instructions" className="instructionsText">{instructions}</div>
+        <div
+          data-testid="instructions"
+          className="instructionsText"
+          style={ {
+            height: '80px',
+            overflow: 'scroll',
+          } }
+        >
+          {instructions}
+
+        </div>
 
         { video && <RecipeVideo video={ video } /> }
 

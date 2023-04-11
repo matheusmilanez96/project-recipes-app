@@ -44,15 +44,13 @@ export default class Recommended extends Component {
             marginRight: '10px' } }
         >
           <button
-            style={ { width: '100px',
+            style={ { width: '50px',
               alignSelf: 'center',
-              borderRadius: '60px',
-              padding: '30px' } }
+              borderRadius: '60px' } }
             onClick={ () => this.handlePrevBtn() }
           >
             Prev
           </button>
-
           {
             list.map((item, index) => (
               <div
@@ -71,12 +69,10 @@ export default class Recommended extends Component {
               </div>
             ))
           }
-
           <button
-            style={ { width: '100px',
+            style={ { width: '50px',
               alignSelf: 'center',
-              borderRadius: '60px',
-              padding: '30px' } }
+              borderRadius: '60px' } }
             onClick={ () => this.handleNextBtn() }
           >
             Next
