@@ -18,6 +18,14 @@
   width: 360px;
 }
 
+.scroller2 {
+  height: 640px;
+  overflow-y: scroll;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
+  width: 360px;
+}
+
 .recipeImg {
   max-height: 200px;
 }
