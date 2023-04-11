@@ -45,7 +45,7 @@ class Login extends React.Component {
     const { email, password, isButtonDisabled } = this.state;
     const { history, dispatch } = this.props;
     return (
-      <div>
+      <div className="scroller">
         <form
           onSubmit={ (e) => {
             e.preventDefault();
