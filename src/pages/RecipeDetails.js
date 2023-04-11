@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import filteredIngredients from '../helpers/filteredIngredients';
 import Ingredients from '../components/Ingredients';
 import RecipeVideo from '../components/RecipeVideo';
+import Recommended from '../components/Recommended';
 
 export default class RecipeDetails extends Component {
   state = {
@@ -20,7 +21,7 @@ export default class RecipeDetails extends Component {
     const type = pathname.split('/')[1];
     const id = pathname.split('/')[2];
     if (type === 'meals') {
-      const { drinks: recommendedDrinks } = await (await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')).json();
+      const { drinks: recommended } = await (await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')).json();
       const { meals } = await (await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)).json();
       const recipe = meals[0];
       this.setState({
@@ -30,12 +31,11 @@ export default class RecipeDetails extends Component {
         instructions: recipe.strInstructions,
         ingredients: filteredIngredients(recipe),
         isLoading: true,
-        // recommendedDrinks,
+        recommended,
         video: recipe.strYoutube,
       });
-      console.log(recipe, recommendedDrinks);
     } else {
-      const { meals: recommendedMeals } = await (await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')).json();
+      const { meals: recommended } = await (await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')).json();
       const { drinks } = await (await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)).json();
       const recipe = drinks[0];
       this.setState({
@@ -46,9 +46,8 @@ export default class RecipeDetails extends Component {
         instructions: recipe.strInstructions,
         ingredients: filteredIngredients(recipe),
         isLoading: true,
-        // recommendedMeals,
+        recommended,
       });
-      console.log(recipe, recommendedMeals);
     }
   }
 
@@ -62,6 +61,7 @@ export default class RecipeDetails extends Component {
       ingredients,
       isLoading,
       video,
+      recommended,
     } = this.state;
 
     return (
@@ -86,11 +86,20 @@ export default class RecipeDetails extends Component {
           ? <Ingredients ingredientsList={ ingredients } />
           : <p>Loading...</p>}
 
-        <p data-testid="instructions" className="instructionsText">{instructions}</p>
+        <h4>Instructions</h4>
+        <div data-testid="instructions" className="instructionsText">{instructions}</div>
 
         { video && <RecipeVideo video={ video } /> }
 
-        <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+        { recommended && <Recommended recommendedList={ recommended } /> }
+
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          className="start-recipe-btn"
+        >
+          Start Recipe
+        </button>
       </div>
     );
   }

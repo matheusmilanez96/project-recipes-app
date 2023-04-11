@@ -11,13 +11,15 @@
     "clipboard-copy": "^4.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.7.0",
+    "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
+    "react-multi-carousel": "^2.8.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
-    "redux-thunk": "^2.4.2"
+    "redux-thunk": "^2.4.2",
+    "swiffy-slider": "^1.6.0"
   },
   "scripts": {
     "cy": "env CY_CLI=true cypress run",
