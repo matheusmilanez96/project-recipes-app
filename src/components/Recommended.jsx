@@ -42,10 +42,9 @@ export default class Recommended extends Component {
             marginRight: '10px' } }
         >
           <button
-            style={ { width: '100px',
+            style={ { width: '50px',
               alignSelf: 'center',
-              borderRadius: '60px',
-              padding: '30px' } }
+              borderRadius: '60px' } }
             onClick={ () => this.handlePrevBtn() }
           >
             Prev
@@ -56,7 +55,7 @@ export default class Recommended extends Component {
             <img
               src={ list[counter].strMealThumb || list[counter].strDrinkThumb }
               alt="recommended"
-              width="300px"
+              width="50px"
             />
             <p data-testid={ `${list[counter]}-recommendation-title` }>
               { list[counter].strMeal || list[counter].strDrink }
@@ -68,17 +67,16 @@ export default class Recommended extends Component {
             <img
               src={ list[counter + 1].strMealThumb || list[counter + 1].strDrinkThumb }
               alt="recommended"
-              width="300px"
+              width="50px"
             />
             <p data-testid={ `${list[counter + 1]}-recommendation-title` }>
               { list[counter + 1].strMeal || list[counter + 1].strDrink }
             </p>
           </div>
           <button
-            style={ { width: '100px',
+            style={ { width: '50px',
               alignSelf: 'center',
-              borderRadius: '60px',
-              padding: '30px' } }
+              borderRadius: '60px' } }
             onClick={ () => this.handleNextBtn() }
           >
             Next

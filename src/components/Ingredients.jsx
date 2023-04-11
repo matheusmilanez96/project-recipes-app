@@ -7,7 +7,10 @@ export default class Ingredients extends Component {
 
     return (
       <div>
-        <h4>Ingredients</h4>
+        <h4>
+          Ingredients
+
+        </h4>
         {
           ingredientsList
             .map((ingredient, index) => (
@@ -15,8 +18,7 @@ export default class Ingredients extends Component {
                 key={ index }
                 data-testid={ `${index}-ingredient-name-and-measure` }
               >
-                <span>{ `${ingredient[0]}` }</span>
-                <span>{ `${ingredient[1]}` }</span>
+                <span>{ `${ingredient[0]} - ${ingredient[1]}` }</span>
               </div>
             ))
         }
