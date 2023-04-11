@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import '../styles/recipeInProgress.css';
 
 export default class RecipeInProgress extends Component {
   constructor() {
@@ -12,12 +13,14 @@ export default class RecipeInProgress extends Component {
       category: '',
       instructions: '',
       ingredientsList: [],
+      checkedIngredients: [],
       type: '',
     };
 
     this.finishClick = this.finishClick.bind(this);
     this.getMealObj = this.getMealObj.bind(this);
     this.getDrinkObj = this.getDrinkObj.bind(this);
+    this.handleChecks = this.handleChecks.bind(this);
   }
   // .
 
@@ -25,18 +28,18 @@ export default class RecipeInProgress extends Component {
     const { history: { location: { pathname } } } = this.props;
     const type = pathname.split('/')[1];
     const id = pathname.split('/')[2];
+    const uncheckedIngredients = [];
     if (type === 'meals') {
       const data = await (await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)).json();
       const { meals } = data;
       const recipe = meals[0];
-      const ingredientsList = [
-        recipe.strIngredient1, recipe.strIngredient2, recipe.strIngredient3,
-        recipe.strIngredient4, recipe.strIngredient5, recipe.strIngredient6,
-        recipe.strIngredient7, recipe.strIngredient8, recipe.strIngredient9,
-        recipe.strIngredient10, recipe.strIngredient11, recipe.strIngredient12,
-        recipe.strIngredient13, recipe.strIngredient14, recipe.strIngredient15,
-        recipe.strIngredient16, recipe.strIngredient17, recipe.strIngredient18,
-        recipe.strIngredient19, recipe.strIngredient20];
+      const ingredientsList = Object.entries(recipe).reduce((acc, curr) => {
+        if (curr[0].includes('strIngredient') && curr[1]) {
+          acc.push(curr[1]);
+          uncheckedIngredients.push(false);
+        }
+        return acc;
+      }, []);
       this.setState({
         recipe,
         thumbnail: recipe.strMealThumb,
@@ -44,20 +47,20 @@ export default class RecipeInProgress extends Component {
         category: recipe.strCategory,
         instructions: recipe.strInstructions,
         ingredientsList,
+        checkedIngredients: uncheckedIngredients,
         type,
       });
     } else {
       const data = await (await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)).json();
       const { drinks } = data;
       const recipe = drinks[0];
-      const ingredientsList = [
-        recipe.strIngredient1, recipe.strIngredient2, recipe.strIngredient3,
-        recipe.strIngredient4, recipe.strIngredient5, recipe.strIngredient6,
-        recipe.strIngredient7, recipe.strIngredient8, recipe.strIngredient9,
-        recipe.strIngredient10, recipe.strIngredient11, recipe.strIngredient12,
-        recipe.strIngredient13, recipe.strIngredient14, recipe.strIngredient15,
-        recipe.strIngredient16, recipe.strIngredient17, recipe.strIngredient18,
-        recipe.strIngredient19, recipe.strIngredient20];
+      const ingredientsList = Object.entries(recipe).reduce((acc, curr) => {
+        if (curr[0].includes('strIngredient') && curr[1]) {
+          acc.push(curr[1]);
+          uncheckedIngredients.push(false);
+        }
+        return acc;
+      }, []);
       this.setState({
         recipe,
         thumbnail: recipe.strDrinkThumb,
@@ -65,9 +68,21 @@ export default class RecipeInProgress extends Component {
         category: recipe.strCategory,
         instructions: recipe.strInstructions,
         ingredientsList,
+        checkedIngredients: uncheckedIngredients,
         type,
       });
     }
+  }
+
+  handleChecks({ target: { id } }) {
+    const { checkedIngredients } = this.state;
+    const newCheckedArray = checkedIngredients.reduce((acc, curr, index) => {
+      acc.push(Number(index) === Number(id) ? !curr : curr);
+      return acc;
+    }, []);
+    this.setState({
+      checkedIngredients: newCheckedArray,
+    });
   }
 
   getMealObj(recipe) {
@@ -134,6 +149,7 @@ export default class RecipeInProgress extends Component {
   render() {
     const {
       recipe, thumbnail, title, category, instructions, ingredientsList,
+      checkedIngredients,
     } = this.state;
     return (
       <div>
@@ -150,8 +166,19 @@ export default class RecipeInProgress extends Component {
         { ingredientsList.map((ingredient, index) => (
           ingredient && (
             <div key={ index }>
-              <label htmlFor={ index } data-testid={ `${index}-ingredient-step` }>
-                <input type="checkbox" id={ index } name={ ingredient } />
+              <label
+                htmlFor={ index }
+                data-testid={ `${index}-ingredient-step` }
+                style={ checkedIngredients[index]
+                  ? { textDecoration: 'line-through solid black' } : {} }
+              >
+                <input
+                  type="checkbox"
+                  id={ index }
+                  name={ ingredient }
+                  onChange={ this.handleChecks }
+                  // checked={ checkedIngredients[index] }
+                />
                 { ingredient }
               </label>
             </div>
@@ -162,6 +189,7 @@ export default class RecipeInProgress extends Component {
           type="button"
           data-testid="finish-recipe-btn"
           onClick={ () => this.finishClick(recipe) }
+          disabled={ checkedIngredients.includes(false) }
         >
           Finalizar
         </button>
