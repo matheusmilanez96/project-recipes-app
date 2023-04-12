@@ -153,7 +153,6 @@ export default class RecipeInProgress extends Component {
     } = this.state;
     return (
       <div className="scroller2">
-        <p>hi</p>
         <img
           src={ thumbnail }
           alt="img"
