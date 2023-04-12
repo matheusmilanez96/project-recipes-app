@@ -6,6 +6,9 @@ import RecipeVideo from '../components/RecipeVideo';
 import Recommended from '../components/Recommended';
 import shareIcon from '../images/shareIcon.svg';
 import favoriteIcon from '../images/whiteHeartIcon.svg';
+import unfavoriteIcon from '../images/blackHeartIcon.svg';
+import getMealObj from '../helpers/getMealObj';
+import getDrinkObj from '../helpers/getDrinkObj';
 
 export default class RecipeDetails extends Component {
   constructor() {
@@ -13,11 +16,13 @@ export default class RecipeDetails extends Component {
 
     this.startClick = this.startClick.bind(this);
     this.favoriteClick = this.favoriteClick.bind(this);
+    this.searchFavs = this.searchFavs.bind(this);
   }
 
   state = {
     recipe: {},
     type: '',
+    id: '',
     thumbnail: '',
     title: '',
     category: '',
@@ -26,12 +31,14 @@ export default class RecipeDetails extends Component {
     ingredients: '',
     isLoading: false,
     linkCopied: false,
+    isFav: false,
   };
 
   async componentDidMount() {
     const { history: { location: { pathname } } } = this.props;
     const type = pathname.split('/')[1];
     const id = pathname.split('/')[2];
+    this.searchFavs(id);
     if (type === 'meals') {
       const { drinks: recommended } = await (await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')).json();
       const { meals } = await (await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)).json();
@@ -39,6 +46,7 @@ export default class RecipeDetails extends Component {
       this.setState({
         recipe,
         type,
+        id,
         thumbnail: recipe.strMealThumb,
         title: recipe.strMeal,
         category: recipe.strCategory,
@@ -55,6 +63,7 @@ export default class RecipeDetails extends Component {
       this.setState({
         recipe,
         type,
+        id,
         thumbnail: recipe.strDrinkThumb,
         title: recipe.strDrink,
         category: recipe.strCategory,
@@ -67,32 +76,6 @@ export default class RecipeDetails extends Component {
     }
   }
 
-  getMealObj(recipe) {
-    const finalRecipe = {
-      id: recipe.idMeal ? recipe.idMeal : '',
-      type: 'meal',
-      nationality: recipe.strArea ? recipe.strArea : '',
-      category: recipe.strCategory ? recipe.strCategory : '',
-      alcoholicOrNot: recipe.strAlcoholic ? recipe.strAlcoholic : '',
-      name: recipe.strMeal ? recipe.strMeal : '',
-      image: recipe.strMealThumb ? recipe.strMealThumb : '',
-    };
-    return finalRecipe;
-  }
-
-  getDrinkObj(recipe) {
-    const finalRecipe = {
-      id: recipe.idDrink ? recipe.idDrink : '',
-      type: 'drink',
-      nationality: recipe.strArea ? recipe.strArea : '',
-      category: recipe.strCategory ? recipe.strCategory : '',
-      alcoholicOrNot: recipe.strAlcoholic ? recipe.strAlcoholic : '',
-      name: recipe.strDrink ? recipe.strDrink : '',
-      image: recipe.strDrinkThumb ? recipe.strDrinkThumb : '',
-    };
-    return finalRecipe;
-  }
-
   copyToClipboard = () => {
     const { history: { location: { pathname } } } = this.props;
     navigator.clipboard.writeText(`http://localhost:3000${pathname}`);
@@ -101,22 +84,54 @@ export default class RecipeDetails extends Component {
     });
   };
 
-  favoriteClick(recipe) {
-    const { type } = this.state;
-    let finalRecipe;
-    if (type === 'meals') {
-      finalRecipe = this.getMealObj(recipe);
-    } else {
-      finalRecipe = this.getDrinkObj(recipe);
-    }
+  searchFavs(id) {
     if (localStorage.getItem('favoriteRecipes') !== null) {
       const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-      const recipeArr = [...favoriteRecipes, finalRecipe];
-      localStorage.setItem('favoriteRecipes', JSON.stringify(recipeArr));
-      console.log(recipeArr);
+      favoriteRecipes.forEach((recipe) => {
+        if (recipe.id === id) {
+          this.setState({
+            isFav: true,
+          });
+        }
+      });
     } else {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([finalRecipe]));
-      console.log(finalRecipe);
+      this.setState({
+        isFav: false,
+      });
+    }
+  }
+
+  favoriteClick(recipe) {
+    const { type, id, isFav } = this.state;
+    let finalRecipe;
+    if (isFav === false) {
+      this.setState({
+        isFav: true,
+      });
+      if (type === 'meals') {
+        finalRecipe = getMealObj(recipe);
+      } else {
+        finalRecipe = getDrinkObj(recipe);
+      }
+      if (localStorage.getItem('favoriteRecipes') !== null) {
+        const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+        const recipeArr = [...favoriteRecipes, finalRecipe];
+        localStorage.setItem('favoriteRecipes', JSON.stringify(recipeArr));
+      } else {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([finalRecipe]));
+      }
+    } else {
+      const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const newFavs = [];
+      favoriteRecipes.forEach((favRecipe) => {
+        if (favRecipe.id !== id) {
+          newFavs.push(favRecipe);
+        }
+      });
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavs));
+      this.setState({
+        isFav: false,
+      });
     }
   }
 
@@ -141,6 +156,7 @@ export default class RecipeDetails extends Component {
       video,
       recommended,
       linkCopied,
+      isFav,
     } = this.state;
 
     return (
@@ -176,8 +192,9 @@ export default class RecipeDetails extends Component {
             type="button"
             data-testid="favorite-btn"
             onClick={ () => this.favoriteClick(recipe) }
+            src={ isFav ? unfavoriteIcon : favoriteIcon }
           >
-            <img src={ favoriteIcon } alt="heart" />
+            <img src={ isFav ? unfavoriteIcon : favoriteIcon } alt="heart" />
           </button>
         </div>
 
@@ -186,7 +203,6 @@ export default class RecipeDetails extends Component {
           {' '}
           { isAlcoholic }
         </h4>
-
         { isLoading
           ? <Ingredients ingredientsList={ ingredients } />
           : <p>Loading...</p>}
