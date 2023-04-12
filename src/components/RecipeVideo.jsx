@@ -16,7 +16,6 @@ export default class RecipeVideo extends Component {
 
   render() {
     const { video } = this.state;
-    console.log(video);
 
     return (
       <div>
