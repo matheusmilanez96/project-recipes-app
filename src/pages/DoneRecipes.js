@@ -35,7 +35,6 @@ export default class DoneRecipes extends Component {
   render() {
     const { pageName, hasSearchIcon } = this.state;
     const { filteredRecipes } = this.state;
-    console.log(filteredRecipes);
     return (
       <div className="scroller">
         <Header pageName={ pageName } hasSearchIcon={ hasSearchIcon } />
