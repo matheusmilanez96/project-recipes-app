@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import '../styles/recipeInProgress.css';
+import shareIcon from '../images/shareIcon.svg';
+import favoriteIcon from '../images/whiteHeartIcon.svg';
+import unfavoriteIcon from '../images/blackHeartIcon.svg';
+import getMealObj from '../helpers/getMealObj';
+import getDrinkObj from '../helpers/getDrinkObj';
+import getMealObj2 from '../helpers/getMealObj2';
+import getDrinkObj2 from '../helpers/getDrinkObj2';
 
 export default class RecipeInProgress extends Component {
   constructor() {
@@ -15,19 +22,22 @@ export default class RecipeInProgress extends Component {
       ingredientsList: [],
       checkedIngredients: [],
       type: '',
+      id: '',
+      linkCopied: false,
+      isFav: false,
     };
 
     this.finishClick = this.finishClick.bind(this);
-    this.getMealObj = this.getMealObj.bind(this);
-    this.getDrinkObj = this.getDrinkObj.bind(this);
     this.handleChecks = this.handleChecks.bind(this);
+    this.searchFavs = this.searchFavs.bind(this);
+    this.copyToClipboard = this.copyToClipboard.bind(this);
   }
-  // .
 
   async componentDidMount() {
     const { history: { location: { pathname } } } = this.props;
     const type = pathname.split('/')[1];
     const id = pathname.split('/')[2];
+    this.searchFavs(id);
     const uncheckedIngredients = [];
     if (type === 'meals') {
       const data = await (await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)).json();
@@ -49,6 +59,7 @@ export default class RecipeInProgress extends Component {
         ingredientsList,
         checkedIngredients: uncheckedIngredients,
         type,
+        id,
       });
     } else {
       const data = await (await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)).json();
@@ -70,6 +81,7 @@ export default class RecipeInProgress extends Component {
         ingredientsList,
         checkedIngredients: uncheckedIngredients,
         type,
+        id,
       });
     }
   }
@@ -85,46 +97,63 @@ export default class RecipeInProgress extends Component {
     });
   }
 
-  getMealObj(recipe) {
-    let recipeTags;
-    if (recipe.strTags !== null) {
-      recipeTags = recipe.strTags.split(',');
+  copyToClipboard = () => {
+    const { type, id } = this.state;
+    navigator.clipboard.writeText(`http://localhost:3000/${type}/${id}`);
+    this.setState({
+      linkCopied: true,
+    });
+  };
+
+  searchFavs(id) {
+    if (localStorage.getItem('favoriteRecipes') !== null) {
+      const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      favoriteRecipes.forEach((recipe) => {
+        if (recipe.id === id) {
+          this.setState({
+            isFav: true,
+          });
+        }
+      });
+    } else {
+      this.setState({
+        isFav: false,
+      });
     }
-    const now = new Date();
-    const date = now.toISOString();
-    const finalRecipe = {
-      id: recipe.idMeal ? recipe.idMeal : '',
-      nationality: recipe.strArea ? recipe.strArea : '',
-      name: recipe.strMeal ? recipe.strMeal : '',
-      category: recipe.strCategory ? recipe.strCategory : '',
-      image: recipe.strMealThumb ? recipe.strMealThumb : '',
-      tags: recipeTags || [],
-      alcoholicOrNot: recipe.strAlcoholic ? recipe.strAlcoholic : '',
-      type: 'meal',
-      doneDate: date,
-    };
-    return finalRecipe;
   }
 
-  getDrinkObj(recipe) {
-    let recipeTags;
-    if (recipe.strTags !== null) {
-      recipeTags = recipe.strTags.split(',');
+  favoriteClick(recipe) {
+    const { type, id, isFav } = this.state;
+    let finalRecipe;
+    if (isFav === false) {
+      this.setState({
+        isFav: true,
+      });
+      if (type === 'meals') {
+        finalRecipe = getMealObj(recipe);
+      } else {
+        finalRecipe = getDrinkObj(recipe);
+      }
+      if (localStorage.getItem('favoriteRecipes') !== null) {
+        const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+        const recipeArr = [...favoriteRecipes, finalRecipe];
+        localStorage.setItem('favoriteRecipes', JSON.stringify(recipeArr));
+      } else {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([finalRecipe]));
+      }
+    } else {
+      const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const newFavs = [];
+      favoriteRecipes.forEach((favRecipe) => {
+        if (favRecipe.id !== id) {
+          newFavs.push(favRecipe);
+        }
+      });
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavs));
+      this.setState({
+        isFav: false,
+      });
     }
-    const now = new Date();
-    const date = now.toISOString();
-    const finalRecipe = {
-      id: recipe.idDrink ? recipe.idDrink : '',
-      nationality: recipe.strArea ? recipe.strArea : '',
-      name: recipe.strDrink ? recipe.strDrink : '',
-      category: recipe.strCategory ? recipe.strCategory : '',
-      image: recipe.strDrinkThumb ? recipe.strDrinkThumb : '',
-      tags: recipeTags || [],
-      alcoholicOrNot: recipe.strAlcoholic ? recipe.strAlcoholic : '',
-      type: 'drink',
-      doneDate: date,
-    };
-    return finalRecipe;
   }
 
   finishClick(recipe) {
@@ -132,9 +161,9 @@ export default class RecipeInProgress extends Component {
     const { type } = this.state;
     let finalRecipe;
     if (type === 'meals') {
-      finalRecipe = this.getMealObj(recipe);
+      finalRecipe = getMealObj2(recipe);
     } else {
-      finalRecipe = this.getDrinkObj(recipe);
+      finalRecipe = getDrinkObj2(recipe);
     }
     if (localStorage.getItem('doneRecipes') !== null) {
       const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -149,7 +178,7 @@ export default class RecipeInProgress extends Component {
   render() {
     const {
       recipe, thumbnail, title, category, instructions, ingredientsList,
-      checkedIngredients,
+      checkedIngredients, linkCopied, isFav,
     } = this.state;
     return (
       <div className="scroller2">
@@ -160,8 +189,19 @@ export default class RecipeInProgress extends Component {
           className="recipeImg"
         />
         <h2 data-testid="recipe-title">{title}</h2>
-        <button type="button" data-testid="share-btn">Compartilhar</button>
-        <button type="button" data-testid="favorite-btn">Favoritar</button>
+        <button onClick={ () => this.copyToClipboard() }>
+          <img data-testid="share-btn" src={ shareIcon } alt="share icon" />
+        </button>
+        {(linkCopied === true)
+          && <p>Link copied!</p> }
+        <button
+          type="button"
+          data-testid="favorite-btn"
+          onClick={ () => this.favoriteClick(recipe) }
+          src={ isFav ? unfavoriteIcon : favoriteIcon }
+        >
+          <img src={ isFav ? unfavoriteIcon : favoriteIcon } alt="heart" />
+        </button>
         <h4 data-testid="recipe-category">{category}</h4>
         { ingredientsList.map((ingredient, index) => (
           ingredient && (
