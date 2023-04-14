@@ -6,8 +6,7 @@ class DrinksCards extends Component {
     const twelve = 12;
     const { recipes: { drinks }, history } = this.props;
     return (
-      <div>
-        Receitas
+      <div className="flex flex-wrap m-4 bg-blue-900/70 justify-around rounded-lg">
         {drinks && drinks.reduce((acc, curr, index) => {
           if (index < twelve) {
             const card = (
@@ -15,16 +14,22 @@ class DrinksCards extends Component {
                 role="presentation"
                 data-testid={ `${index}-recipe-card` }
                 key={ curr.strDrink }
-                className="drink-card"
                 onClick={ () => history.push(`/drinks/${curr.idDrink}`) }
+                className="w-28 p-3 text-white font-bold flex flex-col"
               >
                 <img
                   src={ curr.strDrinkThumb }
                   alt={ curr.strDrink }
-                  className="recipe-card-img"
                   data-testid={ `${index}-card-img` }
+                  className="rounded-full hover:shadow-lg hover:shadow-blue-600"
                 />
-                <div data-testid={ `${index}-card-name` }>{curr.strDrink}</div>
+                <div
+                  data-testid={ `${index}-card-name` }
+                  className="p-1 text-center"
+                >
+                  {curr.strDrink}
+
+                </div>
               </div>);
             acc.push(card);
           }

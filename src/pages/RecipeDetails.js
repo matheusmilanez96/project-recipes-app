@@ -160,25 +160,23 @@ export default class RecipeDetails extends Component {
     } = this.state;
 
     return (
-      <div className="scroller">
+      <div className="flex flex-col items-center">
         <img
           src={ thumbnail }
           alt="img"
           data-testid="recipe-photo"
-          className="recipeImg"
-          style={ {
-            width: '100%',
-          } }
+          className="rounded-full w-44 mt-2"
         />
         <h2
           data-testid="recipe-title"
+          className="text-red-600 text-4xl font-black"
         >
           {title}
-
         </h2>
-        <div>
+        <div className="flex justify-center w-full">
           <button
             onClick={ () => this.copyToClipboard() }
+            className="px-2"
           >
             <img
               data-testid="share-btn"
@@ -186,18 +184,18 @@ export default class RecipeDetails extends Component {
               alt="share icon"
             />
           </button>
-          {(linkCopied === true)
-          && <p>Link copied!</p> }
           <button
             type="button"
             data-testid="favorite-btn"
             onClick={ () => this.favoriteClick(recipe) }
             src={ isFav ? unfavoriteIcon : favoriteIcon }
+            className="px-2"
           >
             <img src={ isFav ? unfavoriteIcon : favoriteIcon } alt="heart" />
           </button>
         </div>
-
+        {(linkCopied === true)
+            && <p>Link copied!</p> }
         <h4 data-testid="recipe-category">
           { category }
           {' '}
@@ -206,19 +204,22 @@ export default class RecipeDetails extends Component {
         { isLoading
           ? <Ingredients ingredientsList={ ingredients } />
           : <p>Loading...</p>}
-
-        <h4>Instructions</h4>
-        <div
-          data-testid="instructions"
-          className="instructionsText"
-          style={ {
-            height: '80px',
-            overflow: 'scroll',
-          } }
+        <section
+          className="m-3 p-2 bg-yellow-900/70 rounded-lg text-white
+         font-semibold"
         >
-          {instructions}
-
-        </div>
+          <h4 className="text-center text-red-400 font-bold">Instructions</h4>
+          <div
+            data-testid="instructions"
+            className="instructionsText"
+            style={ {
+              height: '80px',
+              overflow: 'scroll',
+            } }
+          >
+            {instructions}
+          </div>
+        </section>
 
         { video && <RecipeVideo video={ video } /> }
 
@@ -227,8 +228,9 @@ export default class RecipeDetails extends Component {
         <button
           type="button"
           data-testid="start-recipe-btn"
-          className="start-recipe-btn"
           onClick={ () => this.startClick() }
+          className="fixed bottom-0 p-2 m-2 bg-fuchsia-600 rounded-md
+           text-white font-bold"
         >
           Start Recipe
         </button>

@@ -6,10 +6,9 @@ export default class Ingredients extends Component {
     const { ingredientsList } = this.props;
 
     return (
-      <div>
-        <h4>
+      <div className="bg-yellow-900/70 p-2 rounded-lg text-white font-semibold">
+        <h4 className="text-center text-red-400 font-bold">
           Ingredients
-
         </h4>
         {
           ingredientsList

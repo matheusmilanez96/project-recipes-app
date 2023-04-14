@@ -45,7 +45,7 @@ class Login extends React.Component {
     const { email, password, isButtonDisabled } = this.state;
     const { history, dispatch } = this.props;
     return (
-      <div className="scroller">
+      <div className="min-h-screen flex items-center justify-center">
         <form
           onSubmit={ (e) => {
             e.preventDefault();
@@ -53,10 +53,9 @@ class Login extends React.Component {
             saveUserLocal(email);
             history.push('/meals');
           } }
+          className="border-2 border-black justify bg-yellow-900/70 rounded-lg p-3
+           flex flex-col items-center"
         >
-          <div>
-            Sign in
-          </div>
           <fieldset>
             <input
               type="text"
@@ -65,6 +64,7 @@ class Login extends React.Component {
               placeholder="email"
               onChange={ this.handleChange }
               data-testid="email-input"
+              className="m-2 p-1 rounded-md"
             />
           </fieldset>
           <fieldset>
@@ -75,15 +75,17 @@ class Login extends React.Component {
               placeholder="senha"
               onChange={ this.handleChange }
               data-testid="password-input"
+              className="m-2 p-1 rounded-md"
             />
           </fieldset>
           <button
             type="submit"
             disabled={ isButtonDisabled }
             data-testid="login-submit-btn"
+            className="px-2 py-1 rounded-md my-3 bg-red-700 text-white font-bold
+            disabled:bg-red-200"
           >
-            {' '}
-            Entrar
+            Sign In
           </button>
         </form>
       </div>

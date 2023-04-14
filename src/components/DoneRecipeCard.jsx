@@ -41,7 +41,7 @@ export default class DoneRecipeCard extends Component {
             backgroundColor: 'lightgray',
             color: 'black' } }
         >
-          <Link to={ `/${type}s/${id}` }>
+          <Link to={ `/${type}s/${id}` } className="flex justify-center">
             <img
               data-testid={ `${index}-horizontal-image` }
               src={ image }
@@ -49,32 +49,53 @@ export default class DoneRecipeCard extends Component {
               style={ { width: '50px', height: '50px', borderRadius: '30px' } }
             />
           </Link>
-          <p data-testid={ `${index}-horizontal-top-text` }>
+          <p
+            data-testid={ `${index}-horizontal-top-text` }
+            className="text-center text-red-400 font-bold text-xl"
+          >
             {`${category} ${alcoholic}`}
           </p>
           <Link to={ `/${type}s/${id}` }>
-            <p data-testid={ `${index}-horizontal-name` }>{name}</p>
+            <p
+              data-testid={ `${index}-horizontal-name` }
+              className="text-center text-red-400 font-bold text-xl"
+            >
+              {name}
+
+            </p>
           </Link>
-          <p data-testid={ `${index}-horizontal-done-date` }>
+          <p
+            data-testid={ `${index}-horizontal-done-date` }
+            className="text-center text-red-400 font-bold text-sm"
+          >
             {doneDate}
           </p>
-          <button
-            onClick={ () => this.copyToClipboard() }
-          >
-            <img
-              data-testid={ `${index}-horizontal-share-btn` }
-              src={ shareIcon }
-              alt="share icon"
-            />
-            Compartilhar
-          </button>
+          <div className="flex justify-center">
+            <button
+              onClick={ () => this.copyToClipboard() }
+              className="flex justify-center"
+            >
+              <img
+                data-testid={ `${index}-horizontal-share-btn` }
+                src={ shareIcon }
+                alt="share icon"
+                className="flex justify-center"
+              />
+            </button>
+          </div>
           {(linkCopied === true)
-          && <p>Link copied!</p> }
+          && (
+            <span
+              className="flex justify-center"
+            >
+              Link copied!
+            </span>)}
           <div>
             {!tags || tags.map((tag) => (
               <p
                 key={ tag }
                 data-testid={ `${index}-${tag}-horizontal-tag` }
+                className="text-red-400"
               >
                 {tag}
               </p>

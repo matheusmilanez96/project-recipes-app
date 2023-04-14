@@ -14,7 +14,8 @@ import RecipeInProgress from './pages/RecipeInProgress';
 
 function App() {
   return (
-    <div className="meals">
+    <div className="bg-[url('./images/backgrounds/mealsBackground.jpg')]
+    bg-cover h-full bg-repeat">
       <Provider store={ store }>
         <BrowserRouter>
           <Switch>

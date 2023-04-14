@@ -50,26 +50,34 @@ export default class FavoriteRecipes extends Component {
     const { pageName, hasSearchIcon } = this.state;
     const { filteredRecipes } = this.state;
     return (
-      <div className="scroller">
+      <div
+        className="bg-[url('./images/backgrounds/mealsBackground.jpg')]
+      bg-cover min-h-screen bg-repeat-y"
+      >
         <Header pageName={ pageName } hasSearchIcon={ hasSearchIcon } />
-        <button
-          data-testid="filter-by-all-btn"
-          onClick={ () => this.resetFilteredRecipes() }
-        >
-          All
-        </button>
-        <button
-          data-testid="filter-by-meal-btn"
-          onClick={ () => this.handleFilters('meal') }
-        >
-          Meals
-        </button>
-        <button
-          data-testid="filter-by-drink-btn"
-          onClick={ () => this.handleFilters('drink') }
-        >
-          Drinks
-        </button>
+        <div className="flex justify-evenly mt-3">
+          <button
+            data-testid="filter-by-all-btn"
+            onClick={ () => this.resetFilteredRecipes() }
+            className="py-2 px-3 bg-red-400 rounded-md text-white"
+          >
+            All
+          </button>
+          <button
+            data-testid="filter-by-meal-btn"
+            onClick={ () => this.handleFilters('meal') }
+            className="p-2 bg-red-400 rounded-md text-white"
+          >
+            Meals
+          </button>
+          <button
+            data-testid="filter-by-drink-btn"
+            onClick={ () => this.handleFilters('drink') }
+            className="py-2 px-3 bg-red-400 rounded-md text-white"
+          >
+            Drinks
+          </button>
+        </div>
         <section style={ { display: 'flex', flexWrap: 'wrap', flexDirection: 'row' } }>
           {filteredRecipes.map((recipe, index) => (
             <FavoriteRecipeCard

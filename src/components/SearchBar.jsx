@@ -170,9 +170,10 @@ class SearchBar extends Component {
 
   render() {
     const { searchInput } = this.state;
+    const { pageName } = this.props;
     return (
-      <div>
-        <section>
+      <div className="w-full flex flex-col items-center">
+        <section className="flex flex-col items-center justify-center w-full">
           <input
             placeholder="Search Recipe"
             type="text"
@@ -180,44 +181,50 @@ class SearchBar extends Component {
             name="searchInput"
             value={ searchInput }
             onChange={ this.handleChange }
+            className={ `my-2 mx-3 px-2 py-1 rounded-md self-center 
+            ${pageName === 'Drinks' ? 'bg-blue-200' : 'bg-red-200'}` }
           />
-          <label>
-            Ingredientes
-            <input
-              type="radio"
-              name="searchType"
-              value="ingredient"
-              onChange={ this.handleChange }
-              data-testid="ingredient-search-radio"
-            />
-          </label>
-          <label>
-            Nome
-            <input
-              type="radio"
-              name="searchType"
-              value="name"
-              onChange={ this.handleChange }
-              data-testid="name-search-radio"
-            />
-          </label>
-          <label>
-            Primeira Letra
-            <input
-              type="radio"
-              name="searchType"
-              value="first-letter"
-              onChange={ this.handleChange }
-              data-testid="first-letter-search-radio"
-            />
-          </label>
+          <div className="flex">
+            <label className="px-2">
+              <input
+                type="radio"
+                name="searchType"
+                value="ingredient"
+                onChange={ this.handleChange }
+                data-testid="ingredient-search-radio"
+              />
+              Ingredients
+            </label>
+            <label className="px-2">
+              <input
+                type="radio"
+                name="searchType"
+                value="name"
+                onChange={ this.handleChange }
+                data-testid="name-search-radio"
+              />
+              Name
+            </label>
+            <label className="px-2">
+              <input
+                type="radio"
+                name="searchType"
+                value="first-letter"
+                onChange={ this.handleChange }
+                data-testid="first-letter-search-radio"
+              />
+              First Letter
+            </label>
+          </div>
         </section>
         <button
           type="button"
           onClick={ this.handlePathName }
           data-testid="exec-search-btn"
+          className="p-1 m-2 bg-violet-500 rounded-md
+           text-white font-bold"
         >
-          Buscar
+          Search
         </button>
       </div>
     );

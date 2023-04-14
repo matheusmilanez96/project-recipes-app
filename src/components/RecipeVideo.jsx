@@ -18,8 +18,8 @@ export default class RecipeVideo extends Component {
     const { video } = this.state;
 
     return (
-      <div>
-        <h4>Video</h4>
+      <div className="p-2">
+        <h4 className="text-center">Video</h4>
         <iframe
           title="recipe video"
           width="300"

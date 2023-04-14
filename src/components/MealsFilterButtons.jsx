@@ -43,7 +43,7 @@ class MealsFilterButtons extends Component {
     const five = 5;
 
     return (
-      <div className="meal-filter-btn-div">
+      <div className="flex flex-wrap justify-center pb-20 px-1">
         {meals && meals.reduce((acc, curr, index) => {
           if (index < five) {
             const button = (
@@ -51,8 +51,9 @@ class MealsFilterButtons extends Component {
                 <button
                   id={ curr.strCategory }
                   onClick={ this.handleFilter }
-                  className="filter-button"
                   data-testid={ `${curr.strCategory}-category-filter` }
+                  className="bg-red-500 mx-2 my-1 px-2 py-1 rounded-md hover:bg-orange-500
+                   text-white font-bold"
                 >
                   {curr.strCategory}
                 </button>
@@ -66,9 +67,10 @@ class MealsFilterButtons extends Component {
             data-testid="All-category-filter"
             id="all"
             onClick={ this.handleFilter }
+            className="bg-red-500 mx-2 my-1 px-2 py-1 rounded-md hover:bg-orange-500
+                   text-white font-bold"
           >
             All
-
           </button>)}
       </div>
     );

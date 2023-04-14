@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import '../styles/recipeInProgress.css';
 import shareIcon from '../images/shareIcon.svg';
 import favoriteIcon from '../images/whiteHeartIcon.svg';
 import unfavoriteIcon from '../images/blackHeartIcon.svg';
@@ -181,63 +180,90 @@ export default class RecipeInProgress extends Component {
       checkedIngredients, linkCopied, isFav,
     } = this.state;
     return (
-      <div className="scroller2">
+      <div className="flex flex-col items-center p-2">
         <img
           src={ thumbnail }
           alt="img"
           data-testid="recipe-photo"
-          className="recipeImg"
+          className="rounded-full w-40"
         />
-        <h2 data-testid="recipe-title">{title}</h2>
-        <button onClick={ () => this.copyToClipboard() }>
-          <img data-testid="share-btn" src={ shareIcon } alt="share icon" />
-        </button>
-        {(linkCopied === true)
-          && <p>Link copied!</p> }
-        <button
-          type="button"
-          data-testid="favorite-btn"
-          onClick={ () => this.favoriteClick(recipe) }
-          src={ isFav ? unfavoriteIcon : favoriteIcon }
+        <h2
+          data-testid="recipe-title"
+          className="text-red-600 text-4xl font-black"
         >
-          <img src={ isFav ? unfavoriteIcon : favoriteIcon } alt="heart" />
-        </button>
-        <h4 data-testid="recipe-category">{category}</h4>
-        { ingredientsList.map((ingredient, index) => (
-          ingredient && (
-            <div key={ index }>
-              <label
-                htmlFor={ index }
-                data-testid={ `${index}-ingredient-step` }
-                style={ checkedIngredients[index]
-                  ? { textDecoration: 'line-through solid black' } : {} }
-              >
-                <input
-                  type="checkbox"
-                  id={ index }
-                  name={ ingredient }
-                  onChange={ this.handleChecks }
-                  // checked={ checkedIngredients[index] }
-                />
-                { ingredient }
-              </label>
-            </div>
-          )
-        ))}
-        <p data-testid="instructions">{instructions}</p>
+          {title}
+        </h2>
+        <div className="flex justify-center w-full">
+          <button onClick={ () => this.copyToClipboard() }>
+            <img
+              data-testid="share-btn"
+              src={ shareIcon }
+              alt="share icon"
+              className="px-2"
+            />
+          </button>
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            onClick={ () => this.favoriteClick(recipe) }
+            src={ isFav ? unfavoriteIcon : favoriteIcon }
+            className="px-2"
+          >
+            <img
+              src={ isFav ? unfavoriteIcon : favoriteIcon }
+              alt="heart"
+              className={ isFav && 'stroke-red-500 text-red-600' }
+            />
+          </button>
+        </div>
+        {(linkCopied === true)
+            && <p>Link copied!</p> }
+        <h4 data-testid="recipe-category" className="p-2">{category}</h4>
+        <main
+          className=" bg-yellow-900/70 p-3 rounded-lg flex flex-col
+         text-white font-semibold"
+        >
+          <h4 className="text-center text-red-400 font-bold">Ingredients</h4>
+          { ingredientsList.map((ingredient, index) => (
+            ingredient && (
+              <div key={ index } className="flex flex-col self-start">
+                <label
+                  htmlFor={ index }
+                  data-testid={ `${index}-ingredient-step` }
+                  style={ checkedIngredients[index]
+                    ? { textDecoration: 'line-through solid black' } : {} }
+                  className="m-1"
+                >
+                  <input
+                    type="checkbox"
+                    id={ index }
+                    name={ ingredient }
+                    onChange={ this.handleChecks }
+                  />
+                  { ingredient }
+                </label>
+              </div>
+            )
+          ))}
+        </main>
+        <section className="bg-yellow-900/70 p-3 rounded-lg flex flex-col mx-3 mb-5 mt-3">
+          <h4 className="text-center text-red-400 font-bold">Instructions</h4>
+          <p data-testid="instructions" className="text-white">{instructions}</p>
+        </section>
         <button
           type="button"
           data-testid="finish-recipe-btn"
           onClick={ () => this.finishClick(recipe) }
           disabled={ checkedIngredients.includes(false) }
+          className="fixed bottom-0 py-2 px-3 m-2 bg-fuchsia-600 rounded-md
+          text-white font-bold disabled:bg-fuchsia-200 disabled:text-gray-400"
         >
-          Finalizar
+          Finish
         </button>
       </div>
     );
   }
 }
-
 RecipeInProgress.propTypes = {
   history: PropTypes.shape({
     location: PropTypes.shape({

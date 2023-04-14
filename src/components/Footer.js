@@ -6,9 +6,13 @@ import mealIcon from '../images/mealIcon.svg';
 
 class Footer extends Component {
   render() {
-    const { changePageName } = this.props;
+    const { changePageName, pageName } = this.props;
     return (
-      <div data-testid="footer" className="footer">
+      <div
+        data-testid="footer"
+        className={ ` ${pageName === 'Drinks' ? 'bg-blue-300'
+          : 'bg-red-300'} flex place-content-around p-2.5 fixed bottom-0 w-full` }
+      >
         <Link to="/drinks" onClick={ () => changePageName('/drinks') }>
           <img
             src={ drinkIcon }
@@ -29,6 +33,7 @@ class Footer extends Component {
 }
 
 Footer.propTypes = {
+  pageName: PropTypes.string.isRequired,
   changePageName: PropTypes.func.isRequired,
 };
 

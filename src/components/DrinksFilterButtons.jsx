@@ -43,7 +43,7 @@ class DrinksFilterButtons extends Component {
     const five = 5;
 
     return (
-      <div className="drink-filter-btn-div">
+      <div className="flex flex-wrap justify-center pb-20">
         {drinks && drinks.reduce((acc, curr, index) => {
           if (index < five) {
             const button = (
@@ -52,6 +52,8 @@ class DrinksFilterButtons extends Component {
                   id={ curr.strCategory }
                   onClick={ this.handleFilter }
                   data-testid={ `${curr.strCategory}-category-filter` }
+                  className="bg-blue-400 mx-2 my-1 px-2 py-1 rounded-md hover:bg-sky-500
+                   text-white font-bold"
                 >
                   {curr.strCategory}
                 </button>
@@ -65,6 +67,8 @@ class DrinksFilterButtons extends Component {
             data-testid="All-category-filter"
             id="all"
             onClick={ this.handleFilter }
+            className="bg-blue-400 mx-2 my-1 px-2 py-1 rounded-md hover:bg-sky-500
+                   text-white font-bold"
           >
             All
 

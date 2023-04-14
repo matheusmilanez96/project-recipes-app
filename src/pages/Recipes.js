@@ -4,7 +4,6 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import MealsCards from '../components/MealsCards';
 import DrinksCards from '../components/DrinksCards';
-import '../styles/recipes.css';
 import MealsFilterButtons from '../components/MealsFilterButtons';
 import DrinksFilterButtons from '../components/DrinksFilterButtons';
 
@@ -53,8 +52,11 @@ export default class Recipes extends Component {
   render() {
     const { recipes, recipeType, pageName, hasSearchIcon } = this.state;
     const { history } = this.props;
+    const background = pageName === 'Drinks'
+      ? "bg-[url('./images/backgrounds/drinksBackground.jpg')] bg-cover h-full bg-repeat" 
+      : "bg-[url('./images/backgrounds/mealsBackground.jpg')] bg-cover h-full bg-repeat"
     return (
-      <div className="recipes-first-div scroller">
+      <div className={ background }>
         <Header
           pageName={ pageName }
           hasSearchIcon={ hasSearchIcon }
@@ -69,7 +71,7 @@ export default class Recipes extends Component {
         {recipeType === '/meals'
           ? <MealsFilterButtons filterRecipes={ this.filterRecipes } />
           : <DrinksFilterButtons filterRecipes={ this.filterRecipes } />}
-        <Footer changePageName={ this.changePageName } />
+        <Footer changePageName={ this.changePageName } pageName={ pageName } />
       </div>
     );
   }

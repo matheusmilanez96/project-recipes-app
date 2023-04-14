@@ -1,4 +1,4 @@
-.meals {
+/* .meals {
   align-items: center;
   background: #0fa36b;
   color: #464646;
@@ -8,14 +8,19 @@
   height: 100vh;
   justify-content: center;
   width: 100%;
-}
+} */
 
-.scroller {
+/* .scroller {
   height: 640px;
   overflow-y: scroll visible;
   scrollbar-color: rebeccapurple green;
   scrollbar-width: thin;
   width: 360px;
+} */
+
+html, body, #root, .meals {
+  max-height: 300vh;
+  min-height: 100vh;
 }
 
 .scroller2 {
@@ -97,11 +102,11 @@
   flex-direction: row;
 }
 
-/* requisito 28: posição do botão de iniciar receita */
+/* requisito 28: posição do botão de iniciar receita
 .start-recipe-btn {
   bottom: 0;
   position: fixed;
-}
+} */
 
 /* requisito 27: elementos do carrossel */
 .hidden {

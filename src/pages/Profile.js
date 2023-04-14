@@ -17,19 +17,33 @@ export default class Profile extends Component {
       email = user.email;
     }
     return (
-      <div className="scroller">
+      <div>
         <Header pageName={ pageName } hasSearchIcon={ hasSearchIcon } />
-        <div>
-          <h4 data-testid="profile-email">
+        <div
+          className="min-h-screen flex flex-col items-center justify-center space-y-20"
+        >
+          <h4
+            data-testid="profile-email"
+            className="border-2 border-black justify bg-yellow-900/70 rounded-lg p-3
+              text-white backdrop-blur-[1.5px]"
+          >
             { email }
           </h4>
           <Link to="/done-recipes">
-            <button data-testid="profile-done-btn">
+            <button
+              data-testid="profile-done-btn"
+              className="justify bg-red-500 rounded-lg p-1.5
+                text-white backdrop-blur-[1.5px] text-xl px-3"
+            >
               Done Recipes
             </button>
           </Link>
           <Link to="/favorite-recipes">
-            <button data-testid="profile-favorite-btn">
+            <button
+              data-testid="profile-favorite-btn"
+              className="justify bg-red-500 rounded-lg p-1.5
+                text-white backdrop-blur-[1.5px] text-xl px-3"
+            >
               Favorite Recipes
             </button>
           </Link>
@@ -37,6 +51,8 @@ export default class Profile extends Component {
             <button
               data-testid="profile-logout-btn"
               onClick={ () => localStorage.clear() }
+              className="justify bg-red-500 rounded-lg p-1.5
+                text-white backdrop-blur-[1.5px] text-xl px-3"
             >
               Logout
             </button>

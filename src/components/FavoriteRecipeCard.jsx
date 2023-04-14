@@ -32,7 +32,7 @@ export default class FavoriteRecipeCard extends Component {
     const { linkCopied } = this.state;
 
     return (
-      <section>
+      <section className="flex flex-col items-center w-full">
         <div
           className="recipeCard"
           key={ id }
@@ -43,43 +43,56 @@ export default class FavoriteRecipeCard extends Component {
             backgroundColor: 'lightgray',
             color: 'black' } }
         >
-          <Link to={ `/${type}s/${id}` }>
+          <Link to={ `/${type}s/${id}` } className="flex justify-center">
             <img
               data-testid={ `${index}-horizontal-image` }
               src={ image }
               alt="recipe"
-              style={ { width: '50px', height: '50px', borderRadius: '30px' } }
+              className="rounded-full w-20"
             />
           </Link>
-          <button
-            id={ id }
-            onClick={ () => handleUnlikeBtn(id) }
+          <div className="flex justify-center">
+            <button
+              id={ id }
+              onClick={ () => handleUnlikeBtn(id) }
+              className="flex justify-center m-2"
+            >
+              <img
+                data-testid={ `${index}-horizontal-favorite-btn` }
+                src={ blackHeartIcon }
+                alt="desfavoritar"
+              />
+            </button>
+          </div>
+          <p
+            data-testid={ `${index}-horizontal-top-text` }
+            className="text-center text-red-400 font-bold text-xl"
           >
-            <img
-              data-testid={ `${index}-horizontal-favorite-btn` }
-              src={ blackHeartIcon }
-              alt="desfavoritar"
-            />
-          </button>
-          <p data-testid={ `${index}-horizontal-top-text` }>
             {`${category} ${alcoholic}`}
           </p>
           <Link to={ `/${type}s/${id}` }>
-            <p data-testid={ `${index}-horizontal-name` }>{name}</p>
+            <p
+              data-testid={ `${index}-horizontal-name` }
+              className="text-center text-red-400 font-bold text-xl"
+            >
+              {name}
+            </p>
           </Link>
           <p data-testid={ `${index}-horizontal-done-date` }>
             {doneDate}
           </p>
-          <button
-            onClick={ () => this.copyToClipboard() }
-          >
-            <img
-              data-testid={ `${index}-horizontal-share-btn` }
-              src={ shareIcon }
-              alt="share icon"
-            />
-            Compartilhar
-          </button>
+          <div className="flex justify-center">
+            <button
+              onClick={ () => this.copyToClipboard() }
+              className="flex justify-center"
+            >
+              <img
+                data-testid={ `${index}-horizontal-share-btn` }
+                src={ shareIcon }
+                alt="share icon"
+              />
+            </button>
+          </div>
           {(linkCopied === true)
           && <p>Link copied!</p> }
           <div>
@@ -87,6 +100,7 @@ export default class FavoriteRecipeCard extends Component {
               <p
                 key={ tag }
                 data-testid={ `${index}-${tag}-horizontal-tag` }
+                className="flex justify-center"
               >
                 {tag}
               </p>

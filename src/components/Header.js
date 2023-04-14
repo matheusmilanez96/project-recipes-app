@@ -20,31 +20,55 @@ export default class Header extends Component {
     const { pageName, hasSearchIcon, recipeType, filterRecipes } = this.props;
     const { isSearchActive } = this.state;
     return (
-      <div data-testid="header" className="header">
-
-        {(hasSearchIcon === true)
-        && (
-          <button
-            onClick={ this.handleSearchButton }
-          >
-            <img
-              data-testid="search-top-btn"
-              src={ searchIcon }
-              alt="search-icon"
-            />
-          </button>)}
-        <Link to="/profile">
+      <div
+        data-testid="header"
+        className={ `${pageName === 'Drinks'
+          ? 'bg-blue-300'
+          : 'bg-red-300'} flex justify-between align-middle flex-wrap` }
+      >
+        <Link
+          to="/profile"
+          className="inline-flex justify-self-end m-3"
+        >
           <img
             data-testid="profile-top-btn"
             src={ profileIcon }
             alt="profile-icon"
           />
         </Link>
+
+        <p
+          name={ pageName }
+          data-testid="page-title"
+          className="m-2 text-4xl"
+        >
+          { pageName }
+
+        </p>
+
+        {(hasSearchIcon === true)
+        && (
+          <button
+            onClick={ this.handleSearchButton }
+            className="bg-transparent inline-flex justify-self-end"
+          >
+            <img
+              data-testid="search-top-btn"
+              src={ searchIcon }
+              alt="search-icon"
+              className="m-3"
+            />
+          </button>)}
+
         {(isSearchActive === true)
         && (
-          <SearchBar apiType={ recipeType } filterRecipes={ filterRecipes } />
+          <SearchBar
+            apiType={ recipeType }
+            filterRecipes={ filterRecipes }
+            pageName={ pageName }
+          />
         )}
-        <p name={ pageName } data-testid="page-title">{ pageName }</p>
+
       </div>
     );
   }

@@ -33,21 +33,16 @@ export default class Recommended extends Component {
     const list = recommendedList.slice(0, limit);
 
     return (
-      <div>
-        <h4>Recommended</h4>
+      <div className="p-2 mb-10">
+        <h4 className="text-center p-2 text-blue-600 font-bold">Recommended</h4>
 
         <div
-          style={ { display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'space-evenly',
-            marginRight: '10px' } }
+          className="flex justify-around items-center"
         >
           <button
-            style={ { width: '50px',
-              alignSelf: 'center',
-              borderRadius: '60px' } }
             onClick={ () => this.handlePrevBtn() }
+            className="bg-blue-400 mx-2 my-1 px-2 py-1 rounded-md hover:bg-sky-500
+            text-white font-bold"
           >
             Prev
           </button>
@@ -62,18 +57,21 @@ export default class Recommended extends Component {
                   src={ item.strMealThumb || item.strDrinkThumb }
                   alt="recommended"
                   width="150px"
+                  className="rounded-full w-full p-2"
                 />
-                <p data-testid={ `${index}-recommendation-title` }>
+                <p
+                  data-testid={ `${index}-recommendation-title` }
+                  className=" text-center text-blue-500 font-semibold"
+                >
                   { item.strMeal || item.strDrink }
                 </p>
               </div>
             ))
           }
           <button
-            style={ { width: '50px',
-              alignSelf: 'center',
-              borderRadius: '60px' } }
             onClick={ () => this.handleNextBtn() }
+            className="bg-blue-400 mx-2 my-1 px-2 py-1 rounded-md hover:bg-sky-500
+            text-white font-bold"
           >
             Next
           </button>
